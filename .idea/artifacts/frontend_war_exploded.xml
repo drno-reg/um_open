@@ -1,0 +1,18 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="frontend:war exploded">
+    <output-path>$PROJECT_DIR$/../../../Tomcat/webapps/um_open</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="frontend/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="frontend" />
+          <element id="module-output" name="backend" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="jsp" />
+          <element id="library" level="project" name="jdbc" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
