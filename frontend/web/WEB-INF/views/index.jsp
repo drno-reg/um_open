@@ -21,6 +21,7 @@
   <script type="text/javascript">
       //      // Первоначальное формирование документа
       $(document).ready(function() {
+          // для теста
           $('input[name="username"]').val('user1');
           $('input[name="password"]').val('1234');
 //                document.getElementsByTagName("password").value="1234";
