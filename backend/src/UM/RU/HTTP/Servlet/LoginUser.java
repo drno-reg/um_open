@@ -19,6 +19,12 @@ import java.util.Map;
 
 public class LoginUser extends HttpServlet {
     private static final long serialVersionUID = 1L;
+//    private ValidateUser dao;
+//
+//    public LoginUser(String username, String password) {
+//        super();
+//        dao = new ValidateUser();
+//    }
 
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
@@ -49,10 +55,17 @@ public class LoginUser extends HttpServlet {
             // считывание информации о подключении
             System.out.println("username: " + username);
             System.out.println("password: " + password);
-            Map Validate = ValidateUser.CheckUser(DB_UserName, DB_Password, DB_URL_Connection, ClassDriverName, username, password);
+//            Map Validate = ValidateUser.CheckUser(DB_UserName, DB_Password, DB_URL_Connection, ClassDriverName, username, password);
+//            first_name = (String) Validate.get("first_name");
+//            last_name = (String) Validate.get("last_name");
+//            validation_error = (String) Validate.get("validation_error");
+
+            UM.RU.DB.ValidateUser validateUser=new UM.RU.DB.ValidateUser(DB_UserName, DB_Password, DB_URL_Connection, ClassDriverName);
+            Map Validate=validateUser.CheckUser(username, password);
             first_name = (String) Validate.get("first_name");
             last_name = (String) Validate.get("last_name");
             validation_error = (String) Validate.get("validation_error");
+
         }
         if ("LDAP".equals(LoginType)) {
             // валидация пользователя в LDAP

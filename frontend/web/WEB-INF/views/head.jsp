@@ -1,4 +1,6 @@
-
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.io.File" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%@ taglib uri="/WEB-INF/jstl/c.tld" prefix="c" %>
@@ -57,6 +59,20 @@
     }
 %>
 
+<!-- ------------------- -->
+<!-- Контроль версий -->
+<!-- ------------------- -->
+<!-- определение даты последних изменений jsp страницы -->
+<%
+    String jspPath= request.getServletContext().getRealPath(request.getServletPath());;
+    File jspFile = new File(jspPath);
+    Date lastModified = new Date(jspFile.lastModified());
+    SimpleDateFormat fmt = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+    int StartTime = (int) new Date().getTime();
+    String date_input = null;
+    String date_output = null;
+%>
+
 <body>
 
 
@@ -66,6 +82,7 @@
             <!-- Button for smallest screens -->
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"><span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
             <a class="navbar-brand" href="${pageContext.request.contextPath}/"><img src="${pageContext.request.contextPath}/resources/ico/umbrella5.png" width="35" height="30" border="0" alt="Um.Open 1.2.1"></a>
+            <h6 class="text-right">frontend <%out.println(fmt.format(lastModified));%></h6>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav pull-right">
@@ -73,6 +90,7 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Мониторинг <b class="caret"></b></a>
                     <ul class="dropdown-menu">
+                        <li><a href="${pageContext.request.contextPath}/Forward?URL=monitoring/objects.jsp">Объекты</a></li>
                         <li><a href="${pageContext.request.contextPath}/Forward?URL=tasks.jsp">Просмотр выполнения заданий</a></li>
                     </ul>
                 </li>
@@ -102,8 +120,11 @@
                         <LI><a href="${pageContext.request.contextPath}/LogoutUser">${Solution}</a></li>
 
                         </li>
+
                     </ul>
             </ul>
+
         </div><!--/.nav-collapse -->
+
     </div>
 </div>
