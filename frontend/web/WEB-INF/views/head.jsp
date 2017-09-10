@@ -13,6 +13,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
     <script src="${pageContext.request.contextPath}/resources/jquery/js/jquery-2.1.3.min.js" type="text/javascript"></script>
+
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/normalize/css/normalize.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/bootswatch/cosmo/css/bootstrap.min.css">
     <%--<link rel="stylesheet" href="resources/css/bootstrap-datetimepicker.css">--%>
@@ -92,6 +93,13 @@
                     <ul class="dropdown-menu">
                         <li><a href="${pageContext.request.contextPath}/Forward?URL=monitoring/objects.jsp">Объекты</a></li>
                         <li><a href="${pageContext.request.contextPath}/Forward?URL=tasks.jsp">Просмотр выполнения заданий</a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Отчетность <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="${pageContext.request.contextPath}/Forward?URL=reports/objects.jsp">Объекты</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
