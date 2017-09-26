@@ -31,7 +31,7 @@
         updateTableResult();
         resizeTable();
         // получаем данные по наименованию системы
-        $.getJSON( '../MonitoringObjects', {
+        $.getJSON( 'MonitoringObjects', {
             get_info: "IS_NAME"
         }).done(function( jsondata ) {
 //             console.log(jsondata[0].IS_NAME);
