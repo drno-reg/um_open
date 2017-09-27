@@ -103,11 +103,26 @@
     <div class="panel-heading">Список объектов</div>
 </div>
     <table id="objects_table" class="table table-hover table-striped" border="1" bordercolor="#white"/>
-    <input type="button" value="Add Row" onclick="" class="data-button" id="add-row" />
+    Объект
+    <input type="button" value="Добавить новый" onclick="addnewrow()" class="data-button" id="add-row" />
+    <input type="button" value="Удалить" onclick="deleterow()" class="data-button" id="del-row" />
 </div>
 <div id="Status"/>
 
 <script type="text/javascript">
+    function addnewrow(){
+        console.log("Добавляем новую строку");
+        var row="<thead class='thead-inverse' style='background: #F8F8FF'> <tr id='Object_row' name='Constant_Weight'><tr>";
+        row=row+"<td><input type='checkbox' NAME='CHECKBOX_1'></td><td></td><td></td><td></td>";
+//        for (var i = 3; i < Object.keys(jsondata[jsondata.length-1]).length; i++) {
+//            row=row+"<td id='Constant_Weight_"+Object.keys(jsondata[jsondata.length-1])[i]+"'>"+jsondata[jsondata.length-1][Object.keys(jsondata[jsondata.length-1])[i]]+"</td>";
+//            summa_const.push(jsondata[jsondata.length-1][Object.keys(jsondata[jsondata.length-1])[i]]);
+//            // console.log(Object.keys(jsondata[jsondata.length-1])[i]);
+//        }
+        row=row+"<td/></tr></thead>";
+        $("#objects_table").append(row);
+    }
+
     function updateTableResult(json_result) {
         console.log(json_result);
         // удаляем Шапку таблицы
