@@ -1,7 +1,7 @@
 package UM.RU.DB;
 
-import UM.RU.DB.Datasets.NodeList;
-import UM.RU.DB.Datasets.Nodes;
+import UM.RU.DB.Datasets.MetricList;
+import UM.RU.DB.Datasets.Metrics;
 import atg.taglib.json.util.JSONArray;
 import com.google.gson.Gson;
 
@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class GetNodes {
+public class GetMetrics {
 
     private String DB_UserName;
     private String DB_Password;
@@ -21,7 +21,7 @@ public class GetNodes {
 //    private String password;
     private Connection connection;
 
-    public GetNodes(String DB_UserName, String DB_Password, String DB_URL_Connection, String ClassDriverName) {
+    public GetMetrics(String DB_UserName, String DB_Password, String DB_URL_Connection, String ClassDriverName) {
         this.DB_UserName = DB_UserName;
         this.DB_Password = DB_Password;
         this.DB_URL_Connection = DB_URL_Connection;
@@ -30,53 +30,49 @@ public class GetNodes {
     }
 
 
-    public String CreateNodes(String User_ID){
+    public String CreateMetrics(String User_ID, String Node_ID){
         String Output=null;
-        String Select_Text ="select \n" +
-                "cab.id, cab.user_id, node.id as node_id, node.hostname, node.status, count(metr.id) as metric_count\n" +
-                "from um_nodes node \n" +
-                "left join (select * from um_cabinets t where t.user_id=?) cab on node.cabinet_id=cab.id\n" +
+        String Select_Text ="select node.id as node_id, node.hostname, metr.id as metric_id, metr.name, metr.status\n" +
+                "FROM\n" +
+                "um_nodes node \n" +
                 "left join (select * from um_templates) temp on node.template_id=temp.id\n" +
                 "left join (select * from um_metrics) metr on temp.id=metr.template_id\n" +
                 "where\n" +
                 "1=1\n" +
-                "group by node.hostname\n" +
-                "order by node.hostname";
-        ArrayList nodeList_json = new ArrayList();
-        JSONArray nodes_json = new JSONArray();
+                "and node.id=?\n" +
+                "order by metr.name";
+        ArrayList metricsList_json = new ArrayList();
+        JSONArray metrics_json = new JSONArray();
         // MZOM_is_name mzom_is_name=null;
-        Nodes nodes=null;
-        NodeList nodeList=null;
+        Metrics metrics=null;
+        MetricList metricList=null;
 
         //List rowValues = new ArrayList();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(Select_Text);
             // Parameters start with 1
-            preparedStatement.setString(1,User_ID);
+            preparedStatement.setString(1,Node_ID);
             ResultSet result=preparedStatement.executeQuery();
-            nodes=new Nodes();
-            nodes.setUserId(User_ID);
+            metrics=new Metrics();
+            metrics.setUserId(User_ID);
             Integer countRows=0;
             while (result.next()) {
-                nodeList=new NodeList();
-                nodeList.setNodeId(result.getInt("node_id"));
-                nodeList.setNodeName(result.getString("hostname"));
-                nodeList.setNodeStatus(result.getString("status"));
-                nodeList.setMetricCount(result.getInt("metric_count"));
-               // nodeList
-               // nodeList.setIS_NAME(result.getString("IS_NAME"));
-                nodeList_json.add(nodeList);
+                metricList=new MetricList();
+                metricList.setMetricId(result.getInt("metric_id"));
+                metricList.setMetricName(result.getString("name"));
+                metricList.setMetricStatus(result.getString("status"));
+                metricsList_json.add(metricList);
 
                 //  String num = rs.getString("num");
 //                System.out.println(result.getString("first_name"));
 //                res.put("first_name", result.getString("first_name"));
 //                res.put("last_name", result.getString("last_name"));
 //                res.put("validation_error", "");
-            countRows++;
+                countRows++;
             }
-            nodes.setNodeCount(countRows);
-            nodes.setNodeList(nodeList_json);
-            nodes_json.put(nodes);
+            metrics.setMetricCount(countRows);
+            metrics.setMetricList(metricsList_json);
+            metrics_json.put(metrics);
 //            if (res.get("first_name")!=null) {
 //                res.put("validation_error", "Авторизация прошла успешно!");
 //            }
@@ -88,9 +84,8 @@ public class GetNodes {
         }
 
         Gson gson = new Gson();
-       // return gson.toJson(json);
-        return gson.toJson(nodes_json);
+        // return gson.toJson(json);
+        return gson.toJson(metrics_json);
     }
-
 
 }

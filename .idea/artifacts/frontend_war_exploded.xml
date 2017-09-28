@@ -11,6 +11,7 @@
         <element id="directory" name="lib">
           <element id="library" level="project" name="jsp" />
           <element id="library" level="project" name="jdbc" />
+          <element id="library" level="project" name="json" />
         </element>
       </element>
     </root>
