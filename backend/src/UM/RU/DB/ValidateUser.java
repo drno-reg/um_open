@@ -11,7 +11,7 @@ public class ValidateUser {
     private String DB_Password;
     private String DB_URL_Connection;
     private String ClassDriverName;
-//    private String username;
+    //    private String username;
 //    private String password;
     private Connection connection;
 
