@@ -24,7 +24,8 @@ import java.util.Map;
         protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             // важное замечание - изменение в сервлете выозможно наблюдать если только переразорвать сессию через Logout
             request.setCharacterEncoding("UTF-8");
-            response.setContentType("text/html; charset=UTF-8");
+//            response.setContentType("text/html; charset=UTF-8");
+            response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
 
             String user_id = request.getParameter("user_id");
