@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Map;
 
 
 @WebServlet(
@@ -25,6 +26,19 @@ public class MonitoringObjects extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
-        response.getWriter().append("Проверка сервиса");
+        String user_id = request.getParameter("user_id");
+
+        Map Settings = UM.RU.Config.LoadSettings.Settings("settings.cfg");
+        String LoginType = (String) Settings.get("LoginType");
+        String FileNameDB = (String) Settings.get("FileNameDB");
+        String DB_UserName = (String) Settings.get("DB_UserName");
+        String DB_Password = (String) Settings.get("DB_Password");
+        String DB_URL_Connection = (String) Settings.get("DB_URL_Connection");
+        String ClassDriverName = (String) Settings.get("ClassDriverName");
+        String LDAP_Domain = (String) Settings.get("LDAP_Domain");
+        String LDAP_Host = (String) Settings.get("LDAP_Host");
+        String LDAP_SearchBase = (String) Settings.get("LDAP_SearchBase");
+        UM.RU.DB.GetNodes getNodes=new UM.RU.DB.GetNodes(DB_UserName, DB_Password, DB_URL_Connection, ClassDriverName);
+        response.getWriter().append(getNodes.getNodesHttp(user_id));
     }
 }

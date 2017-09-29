@@ -28,65 +28,15 @@
 <script type="text/javascript">
     //      // Первоначальное формирование документа
     $(document).ready(function() {
-        updateTableResult();
         resizeTable();
         // получаем данные по наименованию системы
         $.getJSON( 'MonitoringObjects', {
-            get_info: "IS_NAME"
+            get_info: "IS_NAME",
+            user_id: 1
         }).done(function( jsondata ) {
-//             console.log(jsondata[0].IS_NAME);
-//              var result=jsondata;
-//             console.log(result);
-//            console.log(result[0].IS_NAME);
-//                for (var i = 0; i < jsondata.length; i++) {
-//                    //   $('#main_selectpicker').append('<option value="'+jsondata.divisions[i].name+'">'+jsondata.divisions[i].name+'</option>');
-//                    //  console.log(jsondata.hostnames[i].name);
-//                    items[i]=jsondata[i].IS_NAME;
-//                }
-            // items=['a06-duty02', 'a00-duty01', 'a03-duty02'];
-//            $("#main_selectpicker")
-            //  .html('<option>'+jsondata.divisions[i].name+'</option>')
-//                .selectpicker('refresh');
-//
-//                function split( val ) {
-//                    return val.split( /,\s*/ );
-//                }
-//                function extractLast( term ) {
-//                    return split( term ).pop();
-//                }
-//
-//                $( "#search" )
-//                    .autocomplete({
-//                        minLength: 0,
-//                        source: function(request, response) {
-//                            var results = $.ui.autocomplete.filter(items, request.term);
-//                            response(results.slice(0, 15));
-//                        },
-//
-//                        //   source: function( request, response ) {
-//                        //       response( $.ui.autocomplete.filter(
-//                        //           items, extractLast( request.term ) ) );
-//                        //  },
-//                        focus: function() {
-//                            return false;
-//                        },
-//                        select: function( event, ui ) {
-//                            var terms = split( this.value );
-//                            // remove the current input
-//                            terms.pop();
-//                            // add the selected item
-//                            terms.push( ui.item.value );
-//                            // add placeholder to get the comma-and-space at the end
-//                            terms.push("");
-//                            //this.value = terms.join(", ");
-//                            this.value = terms.join("");
-//                            return false;
-//                        }
+               updateTableResult(jsondata);               }
         })
-        //            document.getElementById("loading").style.display = "none";
-        //                document.getElementById("search").placeholder = "Введите наименование системы...";
 
-        //            })
             .fail(function(status) {
                 document.getElementById("Status").innerHTML=status.responseText;
             });
@@ -102,7 +52,7 @@
 <div class="panel panel-default">
     <div class="panel-heading">Список объектов</div>
 </div>
-    <table id="nodes_table" class="table table-hover table-striped" border="1" bordercolor="#white"/>
+    <table id="nodes_table" class="table table-hover table-striped" border="1" bordercolor="#white"></table>
     Объект
     <input type="button" value="Добавить новый" onclick="addnewrow()" class="data-button" id="add-row" />
     <input type="button" value="Удалить" onclick="deleterow()" class="data-button" id="del-row" />
@@ -151,7 +101,15 @@
         }
 
         //        cell.setAttribute('style', 'background-color: #2780e3; color: #fff;');
-        var row = "";
+        var tbody = table.createTBody();
+        for(var i in json_result){
+           var r = tbody.insertRow(i);
+           r.insertCell(0).innerHTML = json_result[i].id;
+           r.insertCell(1).innerHTML = json_result[i].hostname;
+           r.insertCell(2).innerHTML = json_result[i].description;
+           r.insertCell(3).innerHTML = json_result[i].name;
+           r.insertCell(4).innerHTML = json_result[i].status;
+        }
     };
 </script>
 
