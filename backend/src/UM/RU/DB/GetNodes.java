@@ -10,6 +10,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class GetNodes {
 
@@ -90,6 +93,36 @@ public class GetNodes {
         Gson gson = new Gson();
        // return gson.toJson(json);
         return gson.toJson(nodes_json);
+    }
+    
+    public String getNodesHttp(String userId){
+        String query = "SELECT n.id, n.hostname, n.description, t.name, n.status\n" +
+        "FROM um_nodes n INNER JOIN um_templates t ON n.template_id = t.id \n" +
+        "                                      INNER JOIN um_cabintes c ON n.cabinet_id = c.id\n" +
+        "WHERE c.user_id = ?";
+        List<Map<String, String> > res = new ArrayList<>();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            // Parameters start with 1
+            preparedStatement.setString(1,userId);
+            ResultSet result=preparedStatement.executeQuery();
+            
+            while (result.next()) {
+                Map<String, String> mp = new HashMap<>();
+                mp.put("hostname", result.getString("hostname"));
+                mp.put("description", result.getString("description"));
+                mp.put("name", result.getString("name"));
+                mp.put("status", result.getString("status"));
+                mp.put("id", result.getString("id"));
+                res.add(mp);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        Gson gson = new Gson();
+       // return gson.toJson(json);
+        return gson.toJson(res);
     }
 
 
