@@ -102,7 +102,7 @@
 <div class="panel panel-default">
     <div class="panel-heading">Список объектов</div>
 </div>
-    <table id="objects_table" class="table table-hover table-striped" border="1" bordercolor="#white"/>
+    <table id="nodes_table" class="table table-hover table-striped" border="1" bordercolor="#white"/>
     Объект
     <input type="button" value="Добавить новый" onclick="addnewrow()" class="data-button" id="add-row" />
     <input type="button" value="Удалить" onclick="deleterow()" class="data-button" id="del-row" />
@@ -120,13 +120,13 @@
 //            // console.log(Object.keys(jsondata[jsondata.length-1])[i]);
 //        }
         row=row+"<td/></tr></thead>";
-        $("#objects_table").append(row);
+        $("#nodes_table").append(row);
     }
 
     function updateTableResult(json_result) {
         console.log(json_result);
         // удаляем Шапку таблицы
-        document.getElementById("objects_table").deleteTHead();
+        document.getElementById("nodes_table").deleteTHead();
         // создаем Шапку таблицы
 
 //        var tr = document.getElementById('report_table').tHead.children[0],
@@ -134,7 +134,7 @@
 //        th.innerHTML = "Second";
 //        tr.appendChild(th);
 
-        var table = document.getElementById("objects_table");
+        var table = document.getElementById("nodes_table");
         var thead = table.createTHead();
         thead.setAttribute('style', 'background-color: #2780e3; color: #fff;');
 

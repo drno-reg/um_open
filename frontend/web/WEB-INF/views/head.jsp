@@ -91,7 +91,7 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Мониторинг <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="${pageContext.request.contextPath}/Forward?URL=monitoring/objects.jsp">Объекты</a></li>
+                        <li><a href="${pageContext.request.contextPath}/Forward?URL=monitoring/nodes.jsp">Ноды</a></li>
                         <li><a href="${pageContext.request.contextPath}/Forward?URL=tasks.jsp">Просмотр выполнения заданий</a></li>
                     </ul>
                 </li>
@@ -99,7 +99,7 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Отчетность <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="${pageContext.request.contextPath}/Forward?URL=reports/objects.jsp">Объекты</a></li>
+                        <li><a href="${pageContext.request.contextPath}/Forward?URL=reports/nodes.jsp">Ноды</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
