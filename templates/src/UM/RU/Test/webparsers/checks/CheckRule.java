@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package webparsers.checks;
+package UM.RU.Test.webparsers.checks;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.WebResponse;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import webparsers.pageloader.WebLoader;
+import UM.RU.Test.webparsers.pageloader.WebLoader;
 
 /**
  *

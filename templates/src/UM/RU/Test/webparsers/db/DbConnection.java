@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package webparsers.db;
+package UM.RU.Test.webparsers.db;
 
 import java.io.IOException;
 import java.sql.Connection;

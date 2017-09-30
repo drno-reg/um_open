@@ -30,11 +30,11 @@ public class GetTasks {
 //    private String password;
     private Connection connection;
     
-    private final String QUERY = "SELECT m.url, r.status_code, r.is_success, r.message, r.loading_time, "
-                                      + "r.execute_started, r.execute_end, r.page_size, r.javascript_errors, t.name\n" +
-"FROM um_results r INNER JOIN um_mentrix m ON r.check_id = m.id \n" +
-"                                       INNER JOIN um_cabints c ON m.cabinet_id = c.id\n" +
-"				       INNER JOIN um_templates t ON m.template_id = t.id WHERE c.user_id = ?";
+    private final String QUERY = "SELECT m.url, r.status_code, r.is_success, r.message, r.loading_time, \n" +
+            "r.exute_started, r.excute_end, r.page_size, t.name\n" +
+            "FROM um_results r INNER JOIN um_rules m ON r.check_id = m.id \n" +
+            "                                       INNER JOIN um_cabinets c ON m.cabinet_id = c.id\n" +
+            "\t\t\t\t       INNER JOIN um_templates t ON m.template_id = t.id WHERE c.user_id = ?";
 
     public GetTasks(String DB_UserName, String DB_Password, String DB_URL_Connection, String ClassDriverName) {
         this.DB_UserName = DB_UserName;
@@ -59,10 +59,9 @@ public class GetTasks {
                 mp.put("is_success", result.getString("is_success"));
                 mp.put("message", result.getString("message"));
                 mp.put("page_size", result.getString("page_size"));
-                mp.put("javascript_errors", result.getString("javascript_errors"));
                 mp.put("loading_time", result.getString("loading_time"));
-                mp.put("execute_started",getStringDate( result.getLong("execute_started")) );
-                mp.put("execute_end",getStringDate( result.getLong("execute_end")) );
+                mp.put("execute_started",getStringDate( result.getLong("excute_end")) );
+                mp.put("execute_end",getStringDate( result.getLong("excute_end")) );
                 mp.put("name", result.getString("name"));
                 res.add(mp);
             }

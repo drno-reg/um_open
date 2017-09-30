@@ -98,7 +98,7 @@ public class GetNodes {
     public String getNodesHttp(String userId){
         String query = "SELECT n.id, n.hostname, n.description, t.name, n.status\n" +
         "FROM um_nodes n INNER JOIN um_templates t ON n.template_id = t.id \n" +
-        "                                      INNER JOIN um_cabintes c ON n.cabinet_id = c.id\n" +
+        "                                      INNER JOIN um_cabinets c ON n.cabinet_id = c.id\n" +
         "WHERE c.user_id = ?";
         List<Map<String, String> > res = new ArrayList<>();
         try {

@@ -32,9 +32,9 @@
         // получаем данные по наименованию системы
         $.getJSON( 'MonitoringObjects', {
             get_info: "IS_NAME",
-            user_id: 1
+            user_id: 4
         }).done(function( jsondata ) {
-               updateTableResult(jsondata);               }
+               updateTableResult(jsondata);
         })
 
             .fail(function(status) {
@@ -149,8 +149,9 @@
             thElm = undefined;
         });
     };
-</script>
 
+</script>
+<%= (new Date()).getTime()%>
 
 </body>
 </html>

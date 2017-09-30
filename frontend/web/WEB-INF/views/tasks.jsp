@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="../head.jsp" %>
+<%@ include file="head.jsp" %>
 <html>
 
 <style>
@@ -28,9 +28,9 @@
         // получаем данные по наименованию системы
         $.getJSON( 'TasksResults', {
             get_info: "IS_NAME",
-            user_id: 1
+            user_id: 4
         }).done(function( jsondata ) {
-               updateTableResult(jsondata);               }
+               updateTableResult(jsondata);
         })
 
             .fail(function(status) {
@@ -40,6 +40,43 @@
     });
 </script>
 <script>
+    function resizeTable() {
+        var thElm;
+        var startOffset;
+
+        Array.prototype.forEach.call(
+            document.querySelectorAll("table th"),
+            function (th) {
+                th.style.position = 'relative';
+
+                var grip = document.createElement('div');
+                grip.innerHTML = "&nbsp;";
+                grip.style.top = 0;
+                grip.style.right = 0;
+                grip.style.bottom = 0;
+                grip.style.width = '5px';
+                grip.style.position = 'absolute';
+                grip.style.cursor = 'col-resize';
+                grip.addEventListener('mousedown', function (e) {
+                    thElm = th;
+                    startOffset = th.offsetWidth - e.pageX;
+                });
+
+                th.appendChild(grip);
+            });
+
+        document.addEventListener('mousemove', function (e) {
+            if (thElm) {
+                thElm.style.width = startOffset + e.pageX + 'px';
+            }
+        });
+
+        document.addEventListener('mouseup', function () {
+            thElm = undefined;
+        });
+    };
+
+
     function updateTableResult(json_result) {
         console.log(json_result);
         document.getElementById("nodes_table").deleteTHead();
@@ -47,9 +84,9 @@
         var table = document.getElementById("nodes_table");
         var thead = table.createTHead();
         thead.setAttribute('style', 'background-color: #2780e3; color: #fff;');
-        var list_monikers = ["url", "status_code", "is_success", "message", "page_size", "javascript_errors", "name", "loading_time", "execute_started", "execute_end"];
+        var list_monikers = ["url", "status_code", "is_success", "message", "page_size", "name", "loading_time", "execute_started", "execute_end"];
 
-        var list_thead = ["URL", "HTTP Status", "Успешно?", "Текст сообщения", "Размер страницы", "Ошибок javascript", "Шаблон проверки", "Загрузка выполнялась", "Начало теста", "Окончание теста"];
+        var list_thead = ["URL", "HTTP Status", "Успешно?", "Текст сообщения", "Размер страницы", "Шаблон проверки", "Загрузка выполнялась", "Начало теста", "Окончание теста"];
         var row = thead.insertRow(0), cell;
         for (var i = 0; i < list_thead.length; i++) {
             cell = row.insertCell(i);
@@ -66,7 +103,7 @@
     };
 </script>
 <body>
-    <table id="nodes_table" class="table table-hover table-striped" border="1">
+    <table id="nodes_table" class="table table-hover table-striped" border="1" style="margin-top: 100px;">
         
     </table>
 </body>

@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package webparsers.checks.rules;
+package UM.RU.Test.webparsers.checks.rules;
 
-import webparsers.checks.CheckResult;
+import UM.RU.Test.webparsers.checks.CheckResult;
 import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
 import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.html.DomElement;
@@ -23,7 +23,7 @@ import org.apache.commons.lang3.StringUtils;
  *
  * @author vassilii
  */
-public class CheckReferences extends webparsers.checks.CheckRule{
+public class CheckReferences extends UM.RU.Test.webparsers.checks.CheckRule{
 
     public CheckReferences(String url, String params) {
         super(url, params);

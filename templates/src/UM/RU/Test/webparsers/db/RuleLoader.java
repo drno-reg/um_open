@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package webparsers.db;
+package UM.RU.Test.webparsers.db;
 
-import webparsers.checks.BuildException;
-import webparsers.checks.CheckBuilder;
-import webparsers.checks.CheckResult;
-import webparsers.checks.CheckRule;
+import UM.RU.Test.webparsers.checks.BuildException;
+import UM.RU.Test.webparsers.checks.CheckBuilder;
+import UM.RU.Test.webparsers.checks.CheckResult;
+import UM.RU.Test.webparsers.checks.CheckRule;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

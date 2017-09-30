@@ -3,17 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package webparsers.checks.rules;
+package UM.RU.Test.webparsers.checks.rules;
 
-import webparsers.checks.CheckResult;
+import UM.RU.Test.webparsers.checks.CheckResult;
 import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.ScriptException;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.javascript.JavaScriptErrorListener;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,7 +19,7 @@ import java.util.logging.Logger;
  *
  * @author vassilii
  */
-public class JavascriptCheck extends webparsers.checks.CheckRule{
+public class JavascriptCheck extends UM.RU.Test.webparsers.checks.CheckRule{
 
     public JavascriptCheck(String url, String params) {
         super(url, params);

@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package webparsers.checks;
+package UM.RU.Test.webparsers.checks;
 
-import webparsers.checks.rules.CheckReferences;
-import webparsers.checks.rules.JavascriptCheck;
-import webparsers.checks.rules.KeywordsCheck;
+import UM.RU.Test.webparsers.checks.rules.CheckReferences;
+import UM.RU.Test.webparsers.checks.rules.JavascriptCheck;
+import UM.RU.Test.webparsers.checks.rules.KeywordsCheck;
 
 /**
  *
