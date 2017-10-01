@@ -50,20 +50,71 @@
     <br>
 
 <div class="panel panel-default">
-    <div class="panel-heading">Список объектов</div>
+    <div class="panel-heading">Список нод</div>
 </div>
     <table id="nodes_table" class="table table-hover table-striped" border="1" bordercolor="#white"></table>
-    Объект
-    <input type="button" value="Добавить новый" onclick="addnewrow()" class="data-button" id="add-row" />
-    <input type="button" value="Удалить" onclick="deleterow()" class="data-button" id="del-row" />
+    Нода
+    <input type="button" value="Обновить" onclick="updaterow();" class="data-button" id="upd-row" />
+    <input type="button" value="Добавить" onclick="addnewrow();" class="data-button" id="add-row" />
+    <input type="button" value="Удалить" onclick="deleterow();" class="data-button" id="del-row" />
 </div>
 <div id="Status"/>
 
 <script type="text/javascript">
+    function deleterow() {
+        console.log("Удаляем");
+        [].forEach.call(document.getElementsByTagName("input"), function (elements_form) {
+            if (([elements_form.getAttribute('id')].toString()).indexOf("CHECKBOX_")!=-1) {
+                if (document.getElementById(elements_form.getAttribute('id')).checked) {
+                    console.log(elements_form.getAttribute('id'));
+
+                    var myTable = document.getElementById("nodes_table");
+                    var rowCount = myTable.rows.length;
+                    var countrows=$('#nodes_table tr').length;
+                    var oRows = document.getElementById('nodes_table').getElementsByTagName('tr');
+                    var iRowCount = oRows.length;
+                           console.log("Удаляем, считаем rowCount :: "+rowCount+" или "+countrows+" или "+iRowCount);
+                    if (myTable.rows.length>1){
+                      //  for (var x=rowCount-1; x>0; x--) {
+                      //      myTable.deleteRow(x);
+                      //  }
+                    }
+
+                }
+            }
+        });
+    }
+    function updaterow() {
+        console.log("Обновляем");
+    }
+    function SELECT_ALL_CHECKBOX(){
+        var arrayList = [];
+        if (document.getElementById('SELECT_ALL_CHECKBOX').checked)
+        {
+            [].forEach.call(document.getElementsByTagName("input"), function (elements_form) {
+                if (([elements_form.getAttribute('id')].toString()).indexOf("CHECKBOX_")!=-1) {
+//                    console.log(elements_form.getAttribute('id'));
+                    document.getElementById(elements_form.getAttribute('id')).checked=true;
+                }
+            });
+        }
+        else{
+            [].forEach.call(document.getElementsByTagName("input"), function (elements_form) {
+                if (([elements_form.getAttribute('id')].toString()).indexOf("CHECKBOX_")!=-1) {
+                    document.getElementById(elements_form.getAttribute('id')).checked=false;
+                }
+            });
+        }
+
+    }
+
     function addnewrow(){
         console.log("Добавляем новую строку");
-        var row="<thead class='thead-inverse' style='background: #F8F8FF'> <tr id='Object_row' name='Constant_Weight'><tr>";
-        row=row+"<td><input type='checkbox' NAME='CHECKBOX_1'></td><td></td><td></td><td></td>";
+        var myTable = document.getElementById("nodes_table");
+        var rowCount = myTable.rows.length;
+        console.log("Добавляем, считаем rowCount :: "+rowCount);
+        var row="<thead class='thead-inverse' style='background: #F8F8FF'> <tr id='node_row_"+rowCount+"'>";
+        row=row+"<td><input type='checkbox' id='CHECKBOX_"+rowCount+"'></td><td></td><td></td><td></td>";
 //        for (var i = 3; i < Object.keys(jsondata[jsondata.length-1]).length; i++) {
 //            row=row+"<td id='Constant_Weight_"+Object.keys(jsondata[jsondata.length-1])[i]+"'>"+jsondata[jsondata.length-1][Object.keys(jsondata[jsondata.length-1])[i]]+"</td>";
 //            summa_const.push(jsondata[jsondata.length-1][Object.keys(jsondata[jsondata.length-1])[i]]);
@@ -97,14 +148,21 @@
         var row = thead.insertRow(0), cell;
         for (var i = 0; i < list_thead.length; i++) {
             cell = row.insertCell(i);
-            cell.innerHTML = list_thead[i];
+            if (i==0){
+                cell.innerHTML = "<input type='checkbox' id='SELECT_ALL_CHECKBOX' onclick='SELECT_ALL_CHECKBOX();'>"+" "+list_thead[i];
+            }
+            else {
+                cell.innerHTML = list_thead[i];
+            }
         }
 
         //        cell.setAttribute('style', 'background-color: #2780e3; color: #fff;');
         var tbody = table.createTBody();
+        var row_count=0;
         for(var i in json_result){
+           row_count=row_count+1;
            var r = tbody.insertRow(i);
-           r.insertCell(0).innerHTML = json_result[i].id;
+           r.insertCell(0).innerHTML = "<input type='checkbox' id='CHECKBOX_"+row_count+"'>"+" "+row_count;
            r.insertCell(1).innerHTML = json_result[i].hostname;
            r.insertCell(2).innerHTML = json_result[i].description;
            r.insertCell(3).innerHTML = json_result[i].name;
