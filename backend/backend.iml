@@ -10,5 +10,7 @@
     <orderEntry type="library" name="jsp" level="project" />
     <orderEntry type="library" name="jdbc" level="project" />
     <orderEntry type="library" name="json" level="project" />
+    <orderEntry type="library" name="browser" level="project" />
+    <orderEntry type="library" name="common" level="project" />
   </component>
 </module>

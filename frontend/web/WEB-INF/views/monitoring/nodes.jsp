@@ -66,6 +66,10 @@
         [].forEach.call(document.getElementsByTagName("input"), function (elements_form) {
             if (([elements_form.getAttribute('id')].toString()).indexOf("CHECKBOX_")!=-1) {
                 if (document.getElementById(elements_form.getAttribute('id')).checked) {
+                    const tableRows = [].slice.call(document.querySelectorAll('#nodes_table tr'))
+
+
+
                     console.log(elements_form.getAttribute('id'));
 
                     var myTable = document.getElementById("nodes_table");
@@ -78,6 +82,18 @@
                       //  for (var x=rowCount-1; x>0; x--) {
                       //      myTable.deleteRow(x);
                       //  }
+                    }
+                    var checkboxes = document.getElementsByTagName("input");
+
+                    for (var i = 0; i < checkboxes.length; i++) {
+                        var checkbox = checkboxes[i];
+                        checkbox.onclick = function() {
+                            var currentRow = this.parentNode.parentNode;
+                            var secondColumn = currentRow.getElementsByTagName("td")[1];
+
+                           // alert("My text is: " + secondColumn.textContent );
+                            console.log("My text is: " + secondColumn.textContent);
+                        };
                     }
 
                 }
@@ -162,7 +178,7 @@
         for(var i in json_result){
            row_count=row_count+1;
            var r = tbody.insertRow(i);
-           r.insertCell(0).innerHTML = "<input type='checkbox' id='CHECKBOX_"+row_count+"'>"+" "+row_count;
+           r.insertCell(0).innerHTML = "<input type='checkbox' id='CHECKBOX_"+json_result[i].id+"'>"+" "+row_count;
            r.insertCell(1).innerHTML = json_result[i].hostname;
            r.insertCell(2).innerHTML = json_result[i].description;
            r.insertCell(3).innerHTML = json_result[i].name;
