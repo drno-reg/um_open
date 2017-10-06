@@ -32,7 +32,8 @@
         // получаем данные по наименованию системы
         $.getJSON( 'MonitoringObjects', {
             get_info: "IS_NAME",
-            user_id: 4
+            user_id: 4,
+            cache: false
         }).done(function( jsondata ) {
                updateTableResult(jsondata);
         })
@@ -83,18 +84,19 @@
                       //      myTable.deleteRow(x);
                       //  }
                     }
-                    var checkboxes = document.getElementsByTagName("input");
 
-                    for (var i = 0; i < checkboxes.length; i++) {
-                        var checkbox = checkboxes[i];
-                        checkbox.onclick = function() {
-                            var currentRow = this.parentNode.parentNode;
-                            var secondColumn = currentRow.getElementsByTagName("td")[1];
-
-                           // alert("My text is: " + secondColumn.textContent );
-                            console.log("My text is: " + secondColumn.textContent);
-                        };
-                    }
+//                    var checkboxes = document.getElementsByTagName("input");
+//
+//                    for (var i = 0; i < checkboxes.length; i++) {
+//                        var checkbox = checkboxes[i];
+//                        checkbox.onclick = function() {
+//                            var currentRow = this.parentNode.parentNode;
+//                            var secondColumn = currentRow.getElementsByTagName("td")[1];
+//
+//                           // alert("My text is: " + secondColumn.textContent );
+//                            console.log("My text is: " + secondColumn.textContent);
+//                        };
+//                    }
 
                 }
             }
