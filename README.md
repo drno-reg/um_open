@@ -35,7 +35,14 @@ ClassDriverName=oracle.jdbc.OracleDriver
 
 Для запуска um_open_scheduler как сервиса в ОС можно воспользоваться 
 java wrapper community версией
-https://wrapper.tanukisoftware.com/doc/english/download.jsp
+Java Service Wrapper Community Edition 32-bit 3.5.30
+https://download.tanukisoftware.com/wrapper/3.5.30/wrapper-windows-x86-32-3.5.30.zip
+и
+https://download.tanukisoftware.com/wrapper/3.5.30/wrapper-linux-x86-32-3.5.30.tar.gz
+или
+https://download.tanukisoftware.com/wrapper/3.5.30/wrapper-linux-x86-64-3.5.30.tar.gz
+
+
 
 входные параметры scheduler
 # тип языка RUS|ENG 
