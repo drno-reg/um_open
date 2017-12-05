@@ -7,11 +7,9 @@
     </content>
     <orderEntry type="jdk" jdkName="9.0" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="jsp" level="project" />
-    <orderEntry type="library" name="jdbc" level="project" />
-    <orderEntry type="library" name="json" level="project" />
-    <orderEntry type="library" name="browser" level="project" />
+    <orderEntry type="module" module-name="backend" />
     <orderEntry type="library" name="common" level="project" />
+    <orderEntry type="library" name="browser" level="project" />
     <orderEntry type="library" name="parsers" level="project" />
     <orderEntry type="library" name="io" level="project" />
   </component>
