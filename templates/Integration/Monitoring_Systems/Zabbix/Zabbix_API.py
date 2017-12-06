@@ -9,9 +9,9 @@ import simplejson as json
 
 # загружаем конфиг
 # пример конфига
-# url=
-# user=
-# password=
+# url=https://server_zabbix/api_jsonrpc.php
+# user=zabbix_api_user
+# password=zabbix_api_user
 
 filepath="C:\\Server\\Repositories\\Projects\\um_open\\templates\\Integration\\Monitoring_Systems\\Zabbix\\config\\zabbix_connection.cfg"
 f = open(filepath, 'r')
