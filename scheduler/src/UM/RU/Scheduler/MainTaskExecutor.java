@@ -67,7 +67,7 @@ public class MainTaskExecutor extends TimerTask {
                 SimpleDateFormat FullDateFormat = new SimpleDateFormat("HH:mm:ss dd.MM.yyyy");
                 CurrentTime.setTime(dt);
                 NewTime.setTime(dt);
-
+                // запись в log информации о найденных заданиях
                 if ((SelectNew.get("PHASE" + x).equals("Waiting"))) {
                     if ("ENG".equals(Lang)){
                         System.out.println("[" + FullDateFormat.format(CurrentTime.getTime()) + "]: Finded task " + SelectNew.get("ID" + x) + "; phase - " + SelectNew.get("PHASE" + x) + "; start task planned on " + SelectNew.get("NEXT_START" + x));
@@ -79,7 +79,15 @@ public class MainTaskExecutor extends TimerTask {
                 // если подошло время выполнения задания
                 //System.out.println(SelectNew.get("NEXT_START" + x));
                 //System.out.println(ShortDateFormat.format(CurrentTime.getTime()));
-                if ((SelectNew.get("PHASE" + x).equals("Waiting")) && (SelectNew.get("NEXT_START" + x).equals(ShortDateFormat.format(CurrentTime.getTime())))) {
+                if (
+                        (SelectNew.get("PHASE" + x).equals("Waiting")) &&
+                        (SelectNew.get("NEXT_START" + x).equals(ShortDateFormat.format(CurrentTime.getTime())))
+// не нравится идея деления на типы, попытаюсь 10:30 [пн;ср] превратить в 10:30 06:12:2017
+//                        &&
+//                        (
+//                        (SelectNew.get("FREQUENCY_TYPE" + x).equals("Минуты"))
+//                        )
+) {
                     if ("ENG".equals(Lang)){
                         System.out.println("[" + FullDateFormat.format(CurrentTime.getTime()) + "]: Launch time " + FullDateFormat.format(CurrentTime.getTime()) + " for run task " + SelectNew.get("ID" + x)+".");
                     }
