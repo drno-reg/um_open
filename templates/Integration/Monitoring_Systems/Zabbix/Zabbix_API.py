@@ -8,6 +8,11 @@ import simplejson as json
 
 
 # загружаем конфиг
+# пример конфига
+# url=
+# user=
+# password=
+
 filepath="C:\\Server\\Repositories\\Projects\\um_open\\templates\\Integration\\Monitoring_Systems\\Zabbix\\config\\zabbix_connection.cfg"
 f = open(filepath, 'r')
 connection = {}
@@ -15,6 +20,7 @@ for line in f:
     k, v = line.strip().split('=')
     connection[k.strip()] = v.strip()
 f.close()
+
 
 
 try:
