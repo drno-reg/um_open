@@ -119,7 +119,7 @@ with no_ssl_verification():
                 "output": "extend",
                 "filter": {
                     "name": [
-                        "DIT.BigData"
+                        connection.get("GroupName")
                     ]
                 }
             },
