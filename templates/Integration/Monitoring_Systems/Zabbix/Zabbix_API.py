@@ -141,7 +141,6 @@ with no_ssl_verification():
             "method": "host.get",
             "params": {
                 "output": ["host"],
-                # "selectGroups": connection.get("GroupName"),
                 "groupids": result_GroupId[0].get("groupid"),
             },
             "auth": authToken.get("result"),
