@@ -53,3 +53,4 @@ DBMS=SQlite
 FileName=C:\Server\Repositories\Projects\um_open\scheduler\config\sqlite_connection.cfg
 
 Пример файла создания службы для ОС Windows:
+

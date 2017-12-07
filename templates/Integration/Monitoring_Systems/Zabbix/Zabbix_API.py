@@ -110,7 +110,31 @@ with no_ssl_verification():
     # # имя первого хоста
     # print(result_hosts[1].get("name"))
 
-    # пример запроса для получения информации по группе
+    # пример запроса для получения GroupId по имени
+    zabbix_get= \
+        {
+            "jsonrpc": "2.0",
+            "method": "hostgroup.get",
+            "params": {
+                "output": "extend",
+                "filter": {
+                    "name": [
+                        "DIT.BigData"
+                    ]
+                }
+            },
+            "auth": authToken.get("result"),
+            "id": authToken.get("id")
+        }
+    GET_request = requests.get(connection.get("URL"), data=json.dumps(zabbix_get), headers=headers);
+    GET_request.encoding = 'utf-8';
+    # сохранение результата в JSON
+    result_GroupId=GET_request.json().get("result")
+    # print(result_hosts)
+    print(GET_request.json())
+    print(result_GroupId[0].get("groupid"))
+
+    # пример запроса для получения информации по группе GroupId
     zabbix_get= \
         {
             "jsonrpc": "2.0",
@@ -118,8 +142,7 @@ with no_ssl_verification():
             "params": {
                 "output": ["host"],
                 # "selectGroups": connection.get("GroupName"),
-                "groupids": connection.get("GroupId"),
-
+                "groupids": result_GroupId[0].get("groupid"),
             },
             "auth": authToken.get("result"),
             "id": authToken.get("id")
@@ -132,7 +155,6 @@ with no_ssl_verification():
     print(GET_request.json())
     # считаем количество хостов
     print("Нашел хостов: ",len(result_hosts))
-
 
 
 
