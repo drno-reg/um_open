@@ -9,9 +9,11 @@ import simplejson as json
 
 # загружаем конфиг
 # пример конфига
-# url=https://server_zabbix/api_jsonrpc.php
-# user=zabbix_api_user
-# password=zabbix_api_user
+# URL=https://server_zabbix/api_jsonrpc.php
+# User=zabbix_api_user
+# Password=zabbix_api_user
+# GroupId=1945
+# GroupName=Group1
 
 filepath="C:\\Server\\Repositories\\Projects\\um_open\\templates\\Integration\\Monitoring_Systems\\Zabbix\\config\\zabbix_connection.cfg"
 f = open(filepath, 'r')
@@ -47,11 +49,11 @@ def no_ssl_verification():
     requests.Session.request = old_request
 
 # with no_ssl_verification():
-#     requests.get(connection.get("url"))
+#     requests.get(connection.get("URL"))
 #     print('It works')
 #
 # try:
-#     requests.get(connection.get("url"))
+#     requests.get(connection.get("URL"))
 # except requests.exceptions.SSLError:
 #     print('It broken')
 
@@ -60,8 +62,8 @@ with no_ssl_verification():
     headers = {"content-type": "application/json-rpc"}
     # получаем токен для Zabbix API
     zabbix_authToken=\
-        {"params": {"password": connection.get("user"), "user": connection.get("password")}, "jsonrpc":"2.0", "method": "user.login", "id": 0}
-    GET_request=requests.get(connection.get("url"), data=json.dumps(zabbix_authToken), headers=headers)
+        {"params": {"password": connection.get("Password"), "user": connection.get("User")}, "jsonrpc":"2.0", "method": "user.login", "id": 0}
+    GET_request=requests.get(connection.get("URL"), data=json.dumps(zabbix_authToken), headers=headers)
     print(GET_request.json())
     authToken=GET_request.json()
     print(authToken.get("result"))
@@ -98,15 +100,39 @@ with no_ssl_verification():
             "auth": authToken.get("result"),
             "id": authToken.get("id")
         }
-    GET_request = requests.get(connection.get("url"), data=json.dumps(zabbix_get), headers=headers);
+    # GET_request = requests.get(connection.get("URL"), data=json.dumps(zabbix_get), headers=headers);
+    # GET_request.encoding = 'utf-8';
+    # # сохранение результата в JSON
+    # result_hosts=GET_request.json().get("result")
+    # print(result_hosts)
+    # # считаем количество хостов
+    # print("Нашел хостов: ",len(result_hosts))
+    # # имя первого хоста
+    # print(result_hosts[1].get("name"))
+
+    # пример запроса для получения информации по группе
+    zabbix_get= \
+        {
+            "jsonrpc": "2.0",
+            "method": "host.get",
+            "params": {
+                "output": ["host"],
+                # "selectGroups": connection.get("GroupName"),
+                "groupids": connection.get("GroupId"),
+
+            },
+            "auth": authToken.get("result"),
+            "id": authToken.get("id")
+        }
+    GET_request = requests.get(connection.get("URL"), data=json.dumps(zabbix_get), headers=headers);
     GET_request.encoding = 'utf-8';
     # сохранение результата в JSON
     result_hosts=GET_request.json().get("result")
-    print(result_hosts)
+    # print(result_hosts)
+    print(GET_request.json())
     # считаем количество хостов
     print("Нашел хостов: ",len(result_hosts))
-    # имя первого хоста
-    print(result_hosts[1].get("name"))
+
 
 
 
