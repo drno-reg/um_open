@@ -199,7 +199,7 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
                     if (result_items_by_hostsid[x].get("hostid").find(hostids[y])!=-1):
                         # print(result_items_by_hostsid[x].get("hostid")," равно ли ",hostids[y])
                         if (yaml_cfg["zabbix_exporter_for_prometheus"]["Keys"]!="*"):
-                            output="<br>Zabbix_Metrics{host=\"%s\", key_=\"%s\"}%s" % (hostnames.get(hostids[y]), result_items_by_hostsid[x].get("key_"), result_items_by_hostsid[x].get("lastvalue"))
+                            output="<br>Zabbix_Metrics{host=\"%s\", key_=\"%s\"} %s" % (hostnames.get(hostids[y]), result_items_by_hostsid[x].get("key_"), result_items_by_hostsid[x].get("lastvalue"))
                             if (yaml_cfg["zabbix_exporter_for_prometheus"]["Keys"].find(result_items_by_hostsid[x].get("key_"))!=-1):
                                 print("hostname: \"",hostnames.get(hostids[y]), "\", "+result_items_by_hostsid[x].get("key_"), ": \"",result_items_by_hostsid[x].get("lastvalue"), "\"")
                                 #     s.wfile.write("<br>node_filesystem_avail{host=".encode()+hostnames[x].encode()+", key_=".encode()+result_items_by_hostsid[x].get("key_").encode()+"}".encode()+result_items_by_hostsid[x].get("lastvalue").encode())
