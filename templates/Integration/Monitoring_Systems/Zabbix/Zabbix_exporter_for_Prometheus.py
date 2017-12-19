@@ -200,7 +200,7 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
                     if (result_items_by_hostsid[x].get("hostid").find(hostids[y])!=-1):
                         # print(result_items_by_hostsid[x].get("hostid")," равно ли ",hostids[y])
                         if (yaml_cfg["zabbix_exporter_for_prometheus"]["Keys"]!="*"):
-                            output="<br>zabbix_metrics{host=\"%s\", key_=\"%s\"} %s" % (hostnames.get(hostids[y]), result_items_by_hostsid[x].get("key_"), result_items_by_hostsid[x].get("lastvalue"))
+                            output="<br>zabbix_metrics{hostname=\"%s\", key_=\"%s\"} %s" % (hostnames.get(hostids[y]), result_items_by_hostsid[x].get("key_"), result_items_by_hostsid[x].get("lastvalue"))
                             stdout="{'hostname' : '%s', 'key_' : '%s'} : %s" % (hostnames.get(hostids[y]), result_items_by_hostsid[x].get("key_"), result_items_by_hostsid[x].get("lastvalue"))
                             if (yaml_cfg["zabbix_exporter_for_prometheus"]["Keys"].find(result_items_by_hostsid[x].get("key_"))!=-1):
                                 print(stdout)
