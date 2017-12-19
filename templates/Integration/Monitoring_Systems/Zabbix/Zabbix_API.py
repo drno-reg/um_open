@@ -249,6 +249,25 @@ with no_ssl_verification():
             "id": authToken.get("id")
         }
 
+    zabbix_get= \
+        {
+            "jsonrpc": "2.0",
+            "method": "item.get",
+            "params": {
+                "output": "extend",
+                "host": connection.get("HostName"),
+                "filter": {
+                    "key_": [
+                        "vfs.fs.size[/data,free]",
+                        "system.cpu.util.usage"
+                    ]
+                },
+                "sortfield": "name"
+            },
+            "auth": authToken.get("result"),
+            "id": authToken.get("id")
+        }
+
     GET_request = requests.get(connection.get("URL"), data=json.dumps(zabbix_get), headers=headers);
     GET_request.encoding = 'utf-8';
     # сохранение результата в JSON
