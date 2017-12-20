@@ -118,10 +118,10 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
             # сохранение результата в JSON
             result_GroupId=GET_request.json().get("result")
             # print(GET_request.json())
-            if (platform.system().find("Windows")!=-1):
-                print("По имени группы %s нашел ее id %s" % (yaml_cfg["zabbix_exporter_for_prometheus"]["GroupName"], result_GroupId[0].get("groupid")))
-            else:
-                print("Search by GroupName %s found id %s" % (yaml_cfg["zabbix_exporter_for_prometheus"]["GroupName"], result_GroupId[0].get("groupid")))
+            # if (platform.system().find("Windows")!=-1):
+                # print("По имени группы %s нашел ее id %s" % (yaml_cfg["zabbix_exporter_for_prometheus"]["GroupName"], result_GroupId[0].get("groupid")))
+            # else:
+                # print("Search by GroupName %s found id %s" % (yaml_cfg["zabbix_exporter_for_prometheus"]["GroupName"], result_GroupId[0].get("groupid")))
 
             # print(result_GroupId[0].get("groupid"))
             # s.wfile.write((GET_request.json()))
@@ -141,11 +141,11 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
             GET_request.encoding = 'utf-8';
             # сохранение результата в JSON
             result_hosts=GET_request.json().get("result")
-            if (platform.system().find("Windows")!=-1):
-                print("Найдено хостов: %s. Подробности: %s" % (len(result_hosts), result_hosts))
-            else:
-                print("Founded hosts: %s. Specification: %s" % (len(result_hosts), result_hosts))
-            print(GET_request.json())
+            # if (platform.system().find("Windows")!=-1):
+                # print("Найдено хостов: %s. Подробности: %s" % (len(result_hosts), result_hosts))
+            # else:
+                # print("Founded hosts: %s. Specification: %s" % (len(result_hosts), result_hosts))
+            # print(GET_request.json())
             # формируем список hostids, к сожалению по имени нельзя, ждем возможно в новой версии
             hostids=[]
             if (yaml_cfg["zabbix_exporter_for_prometheus"]["Keys"].find("*")!=-1):
@@ -156,12 +156,12 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
             hostnames={}
             for x in range(0, len(result_hosts)):
                hostnames[result_hosts[x].get("hostid")] = result_hosts[x].get("host")
-            print(hostnames)
+            # print(hostnames)
             # считаем количество хостов
-            if (platform.system().find("Windows")!=-1):
-                print("Нашел хостов: ",len(hostids)," детализация: ",hostids)
-            else:
-                print("Found hosts: ",len(hostids)," Specification: ",hostids)
+            # if (platform.system().find("Windows")!=-1):
+            #     print("Нашел хостов: ",len(hostids)," детализация: ",hostids)
+            # else:
+            #     print("Found hosts: ",len(hostids)," Specification: ",hostids)
             zabbix_get= \
             {
             "jsonrpc": "2.0",
@@ -186,10 +186,10 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
             # for x in range(0, len(result_items_by_hostsid)):
 
             # получаем информацию о всех метриках если значение  Keys отсутствует или равно * если указан фильтр то будут возвращаться только необходимые значения
-            if (platform.system().find("Windows")!=-1):
-                print("Нашел метрик: ", len(result_items_by_hostsid))
-            else:
-                print("Founded metrics: ", len(result_items_by_hostsid))
+            # if (platform.system().find("Windows")!=-1):
+            #     print("Нашел метрик: ", len(result_items_by_hostsid))
+            # else:
+            #     print("Founded metrics: ", len(result_items_by_hostsid))
             html_page=html_page+"<br># Found hosts: %s" % len(hostids)
             s.wfile.write(html_page.encode())
             result=[]
@@ -222,7 +222,7 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
         s.wfile.write(html_page.encode())
 
 if __name__ == '__main__':
-    print(os.name,": ",platform.system(),": ", platform.release())
+    # print(os.name,": ",platform.system(),": ", platform.release())
     # reload(sys)
     # sys.setdefaultencoding('utf8')
     # на вход подаем информацию
@@ -237,7 +237,7 @@ if __name__ == '__main__':
     PORT_NUMBER=int(argv[3])
     server_class = http.server.HTTPServer
     httpd = server_class((HOST_NAME, PORT_NUMBER), MyHandler)
-    print(time.asctime(), "Server Starts - %s:%s" % (HOST_NAME, PORT_NUMBER))
+    # print(time.asctime(), "Server Starts - %s:%s" % (HOST_NAME, PORT_NUMBER))
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
