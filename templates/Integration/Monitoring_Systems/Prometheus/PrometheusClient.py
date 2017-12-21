@@ -190,7 +190,7 @@ if __name__ == '__main__':
     # HOST_NAME=argv[2]
     PORT_NUMBER=int(argv[3])
     # Start up the server to expose the metrics.
-    start_http_server(8000)
+    start_http_server(PORT_NUMBER)
     # Generate some requests.
     while True:
         process_request(7)
