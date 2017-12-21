@@ -46,7 +46,7 @@ REQUEST_TIME = Summary('request_processing_seconds', 'Time spent processing requ
 # number_add=random.random()
 # h = Histogram('request_latency_seconds', 'Description of histogram')
 
-g = Gauge('my_zabbix_requests', 'Description of gauge', ['hostname', 'key_'])
+g = Gauge('zabbix_metrics', 'Description of gauge', ['hostname', 'key_'])
 
 
 # @g.track_inprogress()
