@@ -48,7 +48,6 @@ REQUEST_TIME = Summary('request_processing_seconds', 'Time spent processing requ
 
 g = Gauge('zabbix_metrics', 'Description of gauge', ['hostname', 'key_'])
 
-
 # @g.track_inprogress()
 # def f():
 #     pass
@@ -187,11 +186,11 @@ if __name__ == '__main__':
     filepath=argv[1]
     with open(filepath, 'r') as f:
         yaml_cfg = yaml.load(f)
-    # HOST_NAME=argv[2]
-    PORT_NUMBER=int(argv[3])
+    PORT_NUMBER=int(argv[2])
+    LATENCY_VALUE=int(argv[3])
     # Start up the server to expose the metrics.
     start_http_server(PORT_NUMBER)
     # Generate some requests.
     while True:
-        process_request(7)
+        process_request(LATENCY_VALUE)
         # process_request(random.random())
