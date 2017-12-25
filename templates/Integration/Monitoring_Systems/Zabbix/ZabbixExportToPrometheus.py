@@ -226,8 +226,10 @@ def process_request(t):
                        if (yaml_cfg["zabbix_exporter_for_prometheus"]["Keys"]!=None):
                            if (yaml_cfg["zabbix_exporter_for_prometheus"]["Keys"].find(result_items_by_hostsid[x].get("key_"))!=-1):
                                print("hostname: \"",hostnames_filter[y], "\", "+result_items_by_hostsid[x].get("key_"), ": \"",result_items_by_hostsid[x].get("lastvalue"), "\"")
+                               g.labels(hostnames_filter[y], result_items_by_hostsid[x].get("key_")).set((float((result_items_by_hostsid[x].get("lastvalue")))))
                        else:
                            print("hostname: \"",hostnames_filter[y], "\", "+result_items_by_hostsid[x].get("key_"), ": \"",result_items_by_hostsid[x].get("lastvalue"), "\"")
+                           g.labels(hostnames_filter[y], result_items_by_hostsid[x].get("key_")).set((float((result_items_by_hostsid[x].get("lastvalue")))))
         # если есть фильтр
         else:
             # print("Example, full dic")
@@ -246,8 +248,10 @@ def process_request(t):
                        if (yaml_cfg["zabbix_exporter_for_prometheus"]["Keys"]!=None):
                            if (yaml_cfg["zabbix_exporter_for_prometheus"]["Keys"].find(result_items_by_hostsid[x].get("key_"))!=-1):
                               print("hostname: \"",hostnames_filter[y], "\", "+result_items_by_hostsid[x].get("key_"), ": \"",result_items_by_hostsid[x].get("lastvalue"), "\"")
+                              g.labels(hostnames_filter[y], result_items_by_hostsid[x].get("key_")).set((float((result_items_by_hostsid[x].get("lastvalue")))))
                        else:
                            print("hostname: \"",hostnames_filter[y], "\", "+result_items_by_hostsid[x].get("key_"), ": \"",result_items_by_hostsid[x].get("lastvalue"), "\"")
+                           g.labels(hostnames_filter[y], result_items_by_hostsid[x].get("key_")).set((float((result_items_by_hostsid[x].get("lastvalue")))))
 
 
 
