@@ -114,15 +114,41 @@ def process_request(t):
         GET_request.encoding = 'utf-8';
         # сохранение результата в JSON
         result_hosts=GET_request.json().get("result")
+        print("По группе %s нашел %s хостов: %s" % (yaml_cfg["zabbix_exporter_for_prometheus"]["GroupName"], len(result_hosts), result_hosts))
+        # print("Фильтр: %s" % (yaml_cfg["zabbix_exporter_for_prometheus"]["HostName"]))
+
         hostids=[]
-        if (yaml_cfg["zabbix_exporter_for_prometheus"]["Keys"].find("*")!=-1):
+        if (yaml_cfg["zabbix_exporter_for_prometheus"]["Keys"].find("~")==-1):
             for x in range(0, len(result_hosts)):
-                hostids.append(result_hosts[x].get("hostid"))
+               hostids.append(result_hosts[x].get("hostid"))
         else:
-            hostids=yaml_cfg["zabbix_exporter_for_prometheus"]["HostIDs"].split(",")
+            hostids=yaml_cfg["zabbix_exporter_for_prometheus"]["HostIDs"].split(", ")
         hostnames={}
-        for x in range(0, len(result_hosts)):
-            hostnames[result_hosts[x].get("hostid")] = result_hosts[x].get("host")
+        hostname_and_ids_filter={}
+        hostnames_filter=[]
+        # проверяем есть ли фильтр по имени
+        if (yaml_cfg["zabbix_exporter_for_prometheus"]["HostName"]!=None):
+            for x in range(0, len(result_hosts)):
+                hostnames[result_hosts[x].get("hostid")] = result_hosts[x].get("host")
+            hostnames_filter=yaml_cfg["zabbix_exporter_for_prometheus"]["HostName"].split(", ")
+            print("В вашем фильтре заявлено %s хоста(ов): %s" % (len(hostnames_filter), hostnames_filter))
+            # коллекция типа словарь для того, чтобы подающийся на вход список хостов можно было бы покрыть Id для того, чтобы передать в API Zabbix
+            for y in range(0, len(hostnames_filter)):
+               # print(hostnames_filter[y])
+               for x in range(0, len(hostnames)):
+                   if (result_hosts[x].get("host").find(hostnames_filter[y])!=-1):
+                      hostname_and_ids_filter[result_hosts[x].get("host")] = result_hosts[x].get("hostid")
+
+        # если проверяем все найденные хосты
+        else:
+            print("Ищем по всем хостам")
+            for y in range(0, len(result_hosts)):
+                # print(hostnames_filter[y])
+                hostname_and_ids_filter[result_hosts[y].get("host")] = result_hosts[y].get("hostid")
+                hostnames_filter.append(result_hosts[y].get("host"))
+
+        print(hostname_and_ids_filter)
+
         zabbix_get= \
                 {
                     "jsonrpc": "2.0",
@@ -130,7 +156,7 @@ def process_request(t):
                     "params": {
                         "output": "extend",
                         "hostids": hostids,
-                        # "host": "server01" только по одному имени, списком только hostid
+                        # "host": hostnames_filter, #только по одному имени, списком только hostid
                         # "search": {
                         #  "key_": connection.get("Keys")
                         # "key_": "vfs.fs.size[/data,free]",
@@ -141,31 +167,90 @@ def process_request(t):
                     "auth": authToken.get("result"),
                     "id": authToken.get("id")
                 }
+        Keys=yaml_cfg["zabbix_exporter_for_prometheus"]["Keys"].split(", ")
+
+        print(hostnames_filter)
+        print(Keys)
+
+        zabbix_get= \
+            {
+                "jsonrpc": "2.0",
+                "method": "item.get",
+                "params": {
+                    "output": "extend",
+                    "filter": {
+                        "host": hostnames_filter,
+                        "key_": Keys,
+                    },
+                    "sortfield": "name"
+                },
+                "auth": authToken.get("result"),
+                "id": authToken.get("id")
+            }
+
         GET_request = requests.get(yaml_cfg["zabbix_exporter_for_prometheus"]["URL"], data=json.dumps(zabbix_get), headers=headers);
         GET_request.encoding = 'utf-8';
         result_items_by_hostsid=GET_request.json().get("result")
-        for y in range(0, len(hostids)):
-            # print(hostids[y])
-            for x in range(0, len(result_items_by_hostsid)):
-                if (result_items_by_hostsid[x].get("hostid").find(hostids[y])!=-1):
-                # print(result_items_by_hostsid[x].get("hostid")," равно ли ",hostids[y])
-                    if (yaml_cfg["zabbix_exporter_for_prometheus"]["Keys"]!="*"):
-                         output="<br>zabbix_metrics{hostname=\"%s\", key_=\"%s\"} %s" % (hostnames.get(hostids[y]), result_items_by_hostsid[x].get("key_"), result_items_by_hostsid[x].get("lastvalue"))
-                         stdout="{'hostname' : '%s', 'key_' : '%s'} : %s" % (hostnames.get(hostids[y]), result_items_by_hostsid[x].get("key_"), result_items_by_hostsid[x].get("lastvalue"))
-                         if (yaml_cfg["zabbix_exporter_for_prometheus"]["Keys"].find(result_items_by_hostsid[x].get("key_"))!=-1):
-                            # metrics.labels(hostnames.get(hostids[y]), result_items_by_hostsid[x].get("key_")).inc((float((result_items_by_hostsid[x].get("lastvalue")))))
-                            print(stdout)
-                            # registry = CollectorRegistry()
-                            # g1 = Gauge('zabbix_metrics', 'help', ['hostname', 'key_'], registry=registry)
-                            # g1.labels('value1', 'value2').set(10)
-                            g.labels(hostnames.get(hostids[y]), result_items_by_hostsid[x].get("key_")).set((float((result_items_by_hostsid[x].get("lastvalue")))))
-                            # g.set(float((result_items_by_hostsid[x].get("lastvalue"))))   # Set to a given value
-                            # h.observe(float((result_items_by_hostsid[x].get("lastvalue"))))
-                            #     s.wfile.write("<br>node_filesystem_avail{host=".encode()+hostnames[x].encode()+", key_=".encode()+result_items_by_hostsid[x].get("key_").encode()+"}".encode()+result_items_by_hostsid[x].get("lastvalue").encode())
-                    else:
-                        print(stdout)
-                        # metrics.labels(hostnames.get(hostids[y]), result_items_by_hostsid[x].get("key_")).inc(float((result_items_by_hostsid[x].get("lastvalue"))))
-                        g.labels(hostnames.get(hostids[y]), result_items_by_hostsid[x].get("key_")).set((float((result_items_by_hostsid[x].get("lastvalue")))))
+        # for y in range(0, len(hostids)):
+        #     # print(hostids[y])
+        #     for x in range(0, len(result_items_by_hostsid)):
+        #         if (result_items_by_hostsid[x].get("hostid").find(hostids[y])!=-1):
+        #         # print(result_items_by_hostsid[x].get("hostid")," равно ли ",hostids[y])
+        #             if (yaml_cfg["zabbix_exporter_for_prometheus"]["Keys"]!="*"):
+        #                  output="<br>zabbix_metrics{hostname=\"%s\", key_=\"%s\"} %s" % (hostnames.get(hostids[y]), result_items_by_hostsid[x].get("key_"), result_items_by_hostsid[x].get("lastvalue"))
+        #                  stdout="{'hostname' : '%s', 'key_' : '%s'} : %s" % (hostnames.get(hostids[y]), result_items_by_hostsid[x].get("key_"), result_items_by_hostsid[x].get("lastvalue"))
+        #                  if (yaml_cfg["zabbix_exporter_for_prometheus"]["Keys"].find(result_items_by_hostsid[x].get("key_"))!=-1):
+        #                     # metrics.labels(hostnames.get(hostids[y]), result_items_by_hostsid[x].get("key_")).inc((float((result_items_by_hostsid[x].get("lastvalue")))))
+        #                     print(stdout)
+        #                     # registry = CollectorRegistry()
+        #                     # g1 = Gauge('zabbix_metrics', 'help', ['hostname', 'key_'], registry=registry)
+        #                     # g1.labels('value1', 'value2').set(10)
+        #                     g.labels(hostnames.get(hostids[y]), result_items_by_hostsid[x].get("key_")).set((float((result_items_by_hostsid[x].get("lastvalue")))))
+        #                     # g.set(float((result_items_by_hostsid[x].get("lastvalue"))))   # Set to a given value
+        #                     # h.observe(float((result_items_by_hostsid[x].get("lastvalue"))))
+        #                     #     s.wfile.write("<br>node_filesystem_avail{host=".encode()+hostnames[x].encode()+", key_=".encode()+result_items_by_hostsid[x].get("key_").encode()+"}".encode()+result_items_by_hostsid[x].get("lastvalue").encode())
+        #             else:
+        #                 print(stdout)
+        #                 # metrics.labels(hostnames.get(hostids[y]), result_items_by_hostsid[x].get("key_")).inc(float((result_items_by_hostsid[x].get("lastvalue"))))
+        #                 g.labels(hostnames.get(hostids[y]), result_items_by_hostsid[x].get("key_")).set((float((result_items_by_hostsid[x].get("lastvalue")))))
+        print("Нашел метрик: ", len(result_items_by_hostsid))
+        print(result_items_by_hostsid)
+        result=[]
+        # отсутсвие фильтра по именам хостов
+        if (yaml_cfg["zabbix_exporter_for_prometheus"]["HostName"]!=None):
+            for y in range(0, len(hostnames_filter)):
+                print(hostnames_filter[y])
+                for x in range(0, len(result_items_by_hostsid)):
+                    if (result_items_by_hostsid[x].get("hostid").find(hostname_and_ids_filter.get(hostnames_filter[y]))!=-1):
+                       # print(result_items_by_hostsid[x].get("hostid")," равно ли ",hostnames_filter[y])
+                       if (yaml_cfg["zabbix_exporter_for_prometheus"]["Keys"]!=None):
+                           if (yaml_cfg["zabbix_exporter_for_prometheus"]["Keys"].find(result_items_by_hostsid[x].get("key_"))!=-1):
+                               print("hostname: \"",hostnames_filter[y], "\", "+result_items_by_hostsid[x].get("key_"), ": \"",result_items_by_hostsid[x].get("lastvalue"), "\"")
+                       else:
+                           print("hostname: \"",hostnames_filter[y], "\", "+result_items_by_hostsid[x].get("key_"), ": \"",result_items_by_hostsid[x].get("lastvalue"), "\"")
+        # если есть фильтр
+        else:
+            # print("Example, full dic")
+            # print(hostname_and_ids_filter)
+            # print("filter list")
+            # print(hostnames_filter)
+            # print("full item list")
+            # print(result_items)
+            for y in range(0, len(hostnames_filter)):
+                # print(hostname_and_ids_filter.get(hostnames_filter[y]))
+                for x in range(0, len(result_items_by_hostsid)):
+                    # print(result_items[x])
+                    if (result_items_by_hostsid[x].get("hostid").find(hostname_and_ids_filter.get(hostnames_filter[y]))!=-1):
+                       # print(result_items[x].get("hostid").find(hostname_and_ids_filter.get(hostnames_filter[y])))
+                       # print(result_items_by_hostsid[x].get("hostid")," равно ли ",hostids[y])
+                       if (yaml_cfg["zabbix_exporter_for_prometheus"]["Keys"]!=None):
+                           if (yaml_cfg["zabbix_exporter_for_prometheus"]["Keys"].find(result_items_by_hostsid[x].get("key_"))!=-1):
+                              print("hostname: \"",hostnames_filter[y], "\", "+result_items_by_hostsid[x].get("key_"), ": \"",result_items_by_hostsid[x].get("lastvalue"), "\"")
+                       else:
+                           print("hostname: \"",hostnames_filter[y], "\", "+result_items_by_hostsid[x].get("key_"), ": \"",result_items_by_hostsid[x].get("lastvalue"), "\"")
+
+
+
 
     # method=['get', 'post']
     # endpoint=['/', '/submit']

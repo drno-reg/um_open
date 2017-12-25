@@ -63,9 +63,9 @@ with no_ssl_verification():
     zabbix_authToken=\
         {"params": {"password": connection.get("Password"), "user": connection.get("User")}, "jsonrpc":"2.0", "method": "user.login", "id": 0}
     GET_request=requests.get(connection.get("URL"), data=json.dumps(zabbix_authToken), headers=headers)
-    print(GET_request.json())
+    # print(GET_request.json())
     authToken=GET_request.json()
-    print(authToken.get("result"))
+    # print(authToken.get("result"))
     # пример запроса для получения информации по Zabbix серверам
     zabbix_get= \
         {
@@ -149,20 +149,18 @@ with no_ssl_verification():
     GET_request.encoding = 'utf-8';
     # сохранение результата в JSON
     result_hosts=GET_request.json().get("result")
-    print(result_hosts)
+
     # перегоняем значания id и name хостов в словарь для того, чтобы появилась возможность по hostid itemsid
     hostnames={}
     for x in range(0, len(result_hosts)):
         hostnames[result_hosts[x].get("hostid")] = result_hosts[x].get("host")
-
     # print("Hostname по id: ", hostnames.get("38464"))
-
-    print(hostnames)
-
+    # print("Все хосты:", hostnames)
     # print(d.get("38203"))
     # print(GET_request.json())
     # считаем количество хостов
-    print("Нашел хостов: ",len(result_hosts))
+    print("По группе %s нашел %s хостов." % (connection.get("GroupName"), len(result_hosts)))
+    print(result_hosts)
 
     zabbix_get=\
     {
@@ -249,14 +247,45 @@ with no_ssl_verification():
             "id": authToken.get("id")
         }
 
+    hostnames_filter=connection.get("HostName").split(",")
+    print("В вашем фильтре заявлено %s хоста(ов): %s" % (len(hostnames_filter), hostnames_filter))
+    # коллекция типа словарь для того, чтобы подающийся на вход список хостов можно было бы покрыть Id для того, чтобы передать в API Zabbix
+    hostname_and_ids_filter={}
+    for y in range(0, len(hostnames_filter)):
+        # print(hostnames_filter[y])
+        for x in range(0, len(hostnames)):
+            if (result_hosts[x].get("host").find(hostnames_filter[y])!=-1):
+                hostname_and_ids_filter[result_hosts[x].get("host")] = result_hosts[x].get("hostid")
+    print(hostname_and_ids_filter)
+        # print(HostName)
+    # print(hostids)
     zabbix_get= \
         {
             "jsonrpc": "2.0",
             "method": "item.get",
             "params": {
                 "output": "extend",
-                "host": connection.get("HostName"),
+                "host": hostnames_filter[0],
                 "filter": {
+                    "key_": [
+                        "vfs.fs.size[/data,free]",
+                        "system.cpu.util.usage"
+                    ]
+                },
+                "sortfield": "name"
+            },
+            "auth": authToken.get("result"),
+            "id": authToken.get("id")
+        }
+
+    zabbix_get= \
+        {
+            "jsonrpc": "2.0",
+            "method": "item.get",
+            "params": {
+                "output": "extend",
+                "filter": {
+                    "host":hostnames_filter,
                     "key_": [
                         "vfs.fs.size[/data,free]",
                         "system.cpu.util.usage"
@@ -271,24 +300,43 @@ with no_ssl_verification():
     GET_request = requests.get(connection.get("URL"), data=json.dumps(zabbix_get), headers=headers);
     GET_request.encoding = 'utf-8';
     # сохранение результата в JSON
-    result_items_by_hostsid=GET_request.json().get("result")
+    result_items=GET_request.json().get("result")
     # print(result_hosts)
-    print(result_items_by_hostsid)
+    print(result_items)
     # print("Значение: ", result_items_by_hostsid[0].get("lastvalue"))
     # считаем количество хостов
     # print("Нашел хостов: ",len(result_hosts))
     # получаем информацию о всех метриках если значение  Keys отсутствует или равно * если указан фильтр то будут возвращаться только необходимые значения
-    print("Нашел метрик: ", len(result_items_by_hostsid))
+    print("Нашел метрик: ", len(result_items))
     result=[]
-    for y in range(0, len(hostids)):
+    if (connection.get("HostName")!="*"):
+        for y in range(0, len(hostids)):
         # print(hostids[y])
-        for x in range(0, len(result_items_by_hostsid)):
-            if (result_items_by_hostsid[x].get("hostid").find(hostids[y])!=-1):
-                # print(result_items_by_hostsid[x].get("hostid")," равно ли ",hostids[y])
-                if (connection.get("Keys")!="*"):
-                    if (connection.get("Keys").find(result_items_by_hostsid[x].get("key_"))!=-1):
-                       print("hostname: \"",hostnames.get(hostids[y]), "\", "+result_items_by_hostsid[x].get("key_"), ": \"",result_items_by_hostsid[x].get("lastvalue"), "\"")
-                else:
-                    print("hostname: \"",hostnames.get(hostids[y]), "\", "+result_items_by_hostsid[x].get("key_"), ": \"",result_items_by_hostsid[x].get("lastvalue"), "\"")
-
+            for x in range(0, len(result_items)):
+                if (result_items[x].get("hostid").find(hostids[y])!=-1):
+                    # print(result_items_by_hostsid[x].get("hostid")," равно ли ",hostids[y])
+                    if (connection.get("Keys")!="*"):
+                        if (connection.get("Keys").find(result_items[x].get("key_"))!=-1):
+                            print("hostname: \"",hostnames.get(hostids[y]), "\", "+result_items[x].get("key_"), ": \"",result_items[x].get("lastvalue"), "\"")
+                    else:
+                        print("hostname: \"",hostnames.get(hostids[y]), "\", "+result_items[x].get("key_"), ": \"",result_items[x].get("lastvalue"), "\"")
+    else:
+        # print("Example, full dic")
+        # print(hostname_and_ids_filter)
+        # print("filter list")
+        # print(hostnames_filter)
+        # print("full item list")
+        # print(result_items)
+        for y in range(0, len(hostnames_filter)):
+            # print(hostname_and_ids_filter.get(hostnames_filter[y]))
+            for x in range(0, len(result_items)):
+                # print(result_items[x])
+                if (result_items[x].get("hostid").find(hostname_and_ids_filter.get(hostnames_filter[y]))!=-1):
+                    # print(result_items[x].get("hostid").find(hostname_and_ids_filter.get(hostnames_filter[y])))
+                    # print(result_items_by_hostsid[x].get("hostid")," равно ли ",hostids[y])
+                    if (connection.get("Keys")!="*"):
+                        if (connection.get("Keys").find(result_items[x].get("key_"))!=-1):
+                            print("hostname: \"",hostnames_filter[y], "\", "+result_items[x].get("key_"), ": \"",result_items[x].get("lastvalue"), "\"")
+                    else:
+                            print("hostname: \"",hostnames_filter[y], "\", "+result_items[x].get("key_"), ": \"",result_items[x].get("lastvalue"), "\"")
 
