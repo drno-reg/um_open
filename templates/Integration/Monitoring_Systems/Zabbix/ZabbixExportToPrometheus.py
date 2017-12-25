@@ -114,7 +114,7 @@ def process_request(t):
         GET_request.encoding = 'utf-8';
         # сохранение результата в JSON
         result_hosts=GET_request.json().get("result")
-        print("По группе %s нашел %s хостов: %s" % (yaml_cfg["zabbix_exporter_for_prometheus"]["GroupName"], len(result_hosts), result_hosts))
+        # print("По группе %s нашел %s хостов: %s" % (yaml_cfg["zabbix_exporter_for_prometheus"]["GroupName"], len(result_hosts), result_hosts))
         # print("Фильтр: %s" % (yaml_cfg["zabbix_exporter_for_prometheus"]["HostName"]))
 
         hostids=[]
@@ -141,13 +141,13 @@ def process_request(t):
 
         # если проверяем все найденные хосты
         else:
-            print("Ищем по всем хостам")
+            # print("Ищем по всем хостам")
             for y in range(0, len(result_hosts)):
                 # print(hostnames_filter[y])
                 hostname_and_ids_filter[result_hosts[y].get("host")] = result_hosts[y].get("hostid")
                 hostnames_filter.append(result_hosts[y].get("host"))
 
-        print(hostname_and_ids_filter)
+        # print(hostname_and_ids_filter)
 
         zabbix_get= \
                 {
@@ -169,8 +169,8 @@ def process_request(t):
                 }
         Keys=yaml_cfg["zabbix_exporter_for_prometheus"]["Keys"].split(", ")
 
-        print(hostnames_filter)
-        print(Keys)
+        # print(hostnames_filter)
+        # print(Keys)
 
         zabbix_get= \
             {
@@ -213,8 +213,8 @@ def process_request(t):
         #                 print(stdout)
         #                 # metrics.labels(hostnames.get(hostids[y]), result_items_by_hostsid[x].get("key_")).inc(float((result_items_by_hostsid[x].get("lastvalue"))))
         #                 g.labels(hostnames.get(hostids[y]), result_items_by_hostsid[x].get("key_")).set((float((result_items_by_hostsid[x].get("lastvalue")))))
-        print("Нашел метрик: ", len(result_items_by_hostsid))
-        print(result_items_by_hostsid)
+        # print("Нашел метрик: ", len(result_items_by_hostsid))
+        # print(result_items_by_hostsid)
         result=[]
         # отсутсвие фильтра по именам хостов
         if (yaml_cfg["zabbix_exporter_for_prometheus"]["HostName"]!=None):
