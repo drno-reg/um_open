@@ -8,6 +8,7 @@ import jpype
 import jaydebeapi
 import datetime
 import os
+import io
 from prometheus_client import CollectorRegistry, start_http_server, Summary, Gauge, Counter, Histogram
 
 REQUEST_TIME = Summary('request_processing_seconds', 'Time spent processing request')
@@ -59,8 +60,8 @@ if __name__ == '__main__':
     # вариант загрузки из YAML
 
     filepath=argv[1]
-    with open(filepath, 'r') as f:
-        yaml_cfg = yaml.load(f)
+    with io.open(filepath, encoding='utf-8') as file:
+        yaml_cfg = yaml.load(file)
     g = Gauge(yaml_cfg["db_exporter_for_prometheus"]["PROJECT"], 'Description of gauge', ['dbname', 'key_'])
     PORT_NUMBER=int(argv[2])
     LATENCY_VALUE=int(argv[3])
