@@ -1,0 +1,25 @@
+# URL Requests for Prometheus simular Node_Exporter
+url_request_for_prometheus:
+    # спецификация
+    # наименование проекта
+    PROJECT: Проект1
+    # наименование коллектора
+    COLLECTOR_NAME: Коллектор1
+    #  Proxy
+    HTTP_PROXY: http://user:пароль@proxy_host:proxy_name
+    # JDBC URL
+    URL : url_name
+
+    # Ищем такой template
+    STRING_TEMPLATE:
+    - str: |
+        >result-
+    - str: |
+        %Y-%m-%d
+    - str: |
+        1
+    - str: |
+        _22-00.txt
+    METRICS:
+    - metric1
+    - metric2
