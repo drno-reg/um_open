@@ -12,7 +12,7 @@ package UM.RU.Test.webparsers.checks;
  * 2. Код ответа сервера
  */
 public class CheckResult {
-    private CheckRule check;
+//    private CheckRule check;
     private boolean isSuccess;
     private long loadingTime;
     private int statusCode;
@@ -22,13 +22,13 @@ public class CheckResult {
     private int javascriptErrors = 0;
     private long pageSize = 0;
     
-    public CheckResult(CheckRule check, long loadingTime, int statusCode, boolean isSuccess, String message){
-        this.check = check;
-        this.isSuccess = isSuccess;
-        this.message.append(message);
-        this.loadingTime = loadingTime;
-        this.statusCode = statusCode;
-    }
+//    public CheckResult(CheckRule check, long loadingTime, int statusCode, boolean isSuccess, String message){
+//        this.check = check;
+//        this.isSuccess = isSuccess;
+//        this.message.append(message);
+//        this.loadingTime = loadingTime;
+//        this.statusCode = statusCode;
+//    }
 
     public long getExecuteStarted() {
         return executeStarted;
@@ -48,18 +48,18 @@ public class CheckResult {
     
     
     
-    public String getUrl(){
-        return check.getUrl();
-    }
+//    public String getUrl(){
+//        return check.getUrl();
+//    }
+//
+//    public CheckResult(CheckRule check, boolean isSuccess, String message){
+//        this(check, -1, -1, isSuccess, message);
+//    }
+//
     
-    public CheckResult(CheckRule check, boolean isSuccess, String message){
-        this(check, -1, -1, isSuccess, message);
-    }
-    
-    
-    public CheckResult(CheckRule check, long loadingTime, int statusCode){
-        this(check, loadingTime, statusCode, false, "");
-    }   
+////    public CheckResult(CheckRule check, long loadingTime, int statusCode){
+//        this(check, loadingTime, statusCode, false, "");
+//    }
     
     
     public void appendMessage(String message){
@@ -74,9 +74,9 @@ public class CheckResult {
         this.statusCode = statusCode;
     }
     
-    public CheckRule getCheck() {
-        return check;
-    }
+//    public CheckRule getCheck() {
+//        return check;
+//    }
 
     public boolean isIsSuccess() {
         return isSuccess;

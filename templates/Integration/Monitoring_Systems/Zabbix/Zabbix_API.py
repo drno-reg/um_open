@@ -23,7 +23,6 @@ for line in f:
 f.close()
 
 
-
 try:
     from functools import partialmethod
 except ImportError:
