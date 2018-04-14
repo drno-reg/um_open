@@ -22,7 +22,6 @@ for line in f:
     connection[k.strip()] = v.strip()
 f.close()
 
-
 try:
     from functools import partialmethod
 except ImportError:
