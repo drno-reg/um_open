@@ -26,5 +26,6 @@
     <orderEntry type="library" name="jsp" level="project" />
     <orderEntry type="module" module-name="backend" />
     <orderEntry type="library" name="jdbc" level="project" />
+    <orderEntry type="library" name="common" level="project" />
   </component>
 </module>

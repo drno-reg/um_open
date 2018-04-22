@@ -100,6 +100,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Отчетность <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="${pageContext.request.contextPath}/Forward?URL=reports/nodes.jsp">Ноды</a></li>
+                        <li><a href="${pageContext.request.contextPath}/Forward?URL=reports/banana_hat.jsp">Банан</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
