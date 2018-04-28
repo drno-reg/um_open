@@ -24,7 +24,6 @@
 </style>
 
 
-
 <script type="text/javascript">
     //      // Первоначальное формирование документа
     $(document).ready(function() {

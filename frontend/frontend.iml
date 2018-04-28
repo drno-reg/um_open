@@ -21,10 +21,11 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$" isTestSource="false" />
     </content>
-    <orderEntry type="jdk" jdkName="9.0" jdkType="JavaSDK" />
+    <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="jsp" level="project" />
     <orderEntry type="module" module-name="backend" />
     <orderEntry type="library" name="jdbc" level="project" />
+    <orderEntry type="library" name="common" level="project" />
   </component>
 </module>
