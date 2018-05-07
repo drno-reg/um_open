@@ -72,7 +72,7 @@ def process_request(t):
                     # if (find_str(result[len(result)-1],'/')==-1):
                     # разбор business_dt=2015-10-01
                     if (result[len(result)-1].count('/')==0):
-                        print("Подневное партиционирование v1: ", result[len(result)-1])
+                        # print("Подневное партиционирование v1: ", result[len(result)-1])
                         date_time_string=result[len(result)-1][find_str(result[len(result)-1],'=')+1:]
                         # print(date_time_string)
                         metrics_time = datetime.datetime.strptime(date_time_string, '%Y-%m-%d')
@@ -87,7 +87,7 @@ def process_request(t):
                     # if (find_str(result[len(result)-1],'/')==1):
                     # разбор t_start_date_ymd=20170620/t_start_date_ymdh=2017062001
                     if (result[len(result)-1].count('/')==1):
-                        print("Почасовое партиционирование: ", result[len(result)-1])
+                        # print("Почасовое партиционирование: ", result[len(result)-1])
                         date_time_string=result[len(result)-1][:find_str(result[len(result)-1],'/')]
                         date_time_string=date_time_string[find_str(date_time_string,'=')+1:]
                         # print(date_time_string)
@@ -103,7 +103,7 @@ def process_request(t):
                     if (result[len(result)-1].count('/')>1):
                     # разбор yyyy=2017/mm=10/dd=1
                     # if (find_str(result[len(result)-1],'/')>1):
-                        print("Подневное партиционирование v2: ", result[len(result)-1])
+                    #     print("Подневное партиционирование v2: ", result[len(result)-1])
                         # date_time_string=result[len(result)-1][:find_str(result[len(result)-1],'/')]
                         # date_time_string=date_time_string[find_str(date_time_string,'=')+1:]
                         r=re.compile(r"[^0-9-]")
