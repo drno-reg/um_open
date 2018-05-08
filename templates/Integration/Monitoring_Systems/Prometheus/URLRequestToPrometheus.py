@@ -39,26 +39,31 @@ def process_request(t):
         r = requests.get(yaml_cfg["url_request_for_prometheus"]["URL"])
         HTML_BODY=r.text
         # print(HTML_BODY)
-        print(STRING_TEMPLATE)
+
+        # print(STRING_TEMPLATE)
         # в связи с тем, что при после считывания списка паметров сзади добавляется символ переноса строки, то необходимо его убрать .rstrip('\n')
-        FIND_VALUE='%s%s' % (STRING_TEMPLATE[0].get("str").rstrip('\n'),(datetime.datetime.now()).strftime(STRING_TEMPLATE[1].get("str").rstrip('\n')))
-        print(FIND_VALUE)
+        FIND_VALUE='%s%s' % (STRING_TEMPLATE[0].get("str").rstrip('\n'),(datetime.datetime.now() + datetime.timedelta(days=-1)).strftime(STRING_TEMPLATE[1].get("str").rstrip('\n')))
+        # print(datetime.datetime.now()+ datetime.timedelta(days=1))
+        # FIND_VALUE='>result-2018-05-07'
+        print("Ищем: ", FIND_VALUE)
         RESULT = re.search(FIND_VALUE, HTML_BODY)
+
         print(RESULT)
         print(RESULT.start())
         print(RESULT.end())
 
         try:
+           print("Обработка статистики")
            FILENAME=yaml_cfg["url_request_for_prometheus"]["URL"]+HTML_BODY[RESULT.start()+1:RESULT.end()+len(STRING_TEMPLATE[3].get("str").rstrip('\n'))]
-           # print(FILENAME)
+           print(FILENAME)
            HTML_TEXT = requests.get(FILENAME)
-           # print(HTML_TEXT.text)
+           print(HTML_TEXT.text)
            HTML_TEXT.encoding = 'utf-8'
 
            FIND_VALUE="profiles_msisdn_exebid"
            RESULT = re.search(FIND_VALUE, HTML_TEXT.text)
            print(HTML_TEXT.text[RESULT.start():RESULT.end()])
-           # print(RESULT.start(),RESULT.end()+len('_22-00.txt'))
+           print(RESULT.start(),RESULT.end()+len('_22-00.txt'))
            METRICS=yaml_cfg["url_request_for_prometheus"]["METRICS"]
            searchObj = re.search( r'(.*)%s(.*)' % (METRICS[0]), HTML_TEXT.text, re.M|re.I)
            print(searchObj)
