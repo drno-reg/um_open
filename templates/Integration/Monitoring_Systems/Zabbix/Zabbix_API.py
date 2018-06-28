@@ -293,7 +293,6 @@ with no_ssl_verification():
             "auth": authToken.get("result"),
             "id": authToken.get("id")
         }
-
     GET_request = requests.get(connection.get("URL"), data=json.dumps(zabbix_get), headers=headers);
     GET_request.encoding = 'utf-8';
     # сохранение результата в JSON
