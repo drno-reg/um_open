@@ -21,6 +21,7 @@ import (
 	"github.com/prometheus/common/log"
 	"github.com/prometheus/common/version"
 	"gopkg.in/alecthomas/kingpin.v2"
+	"os"
 )
 
 const (
@@ -464,9 +465,8 @@ func filterServerMetrics(filter string) (map[int]*prometheus.GaugeVec, error) {
 
 func main() {
 
-	//port := os.Args[1]
-	//fmt.Println(port)
-
+	port :=os.Args[1]
+	fmt.Println(port)
 
 	const pidFileHelpText = `Path to HAProxy pid file.
 	If provided, the standard process metrics get exported for the HAProxy
