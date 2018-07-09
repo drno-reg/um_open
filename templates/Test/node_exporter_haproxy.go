@@ -463,7 +463,6 @@ func filterServerMetrics(filter string) (map[int]*prometheus.GaugeVec, error) {
 }
 
 func main() {
-
 	//port :=os.Args[1]
 	//fmt.Println(port)
 
