@@ -5,6 +5,9 @@ import (
 	"net/http"
     "io/ioutil"
 )
+
+
+
 func main() {
 
 	var url string = "https://www.fonbet.ru/#!/football-2018/results"
