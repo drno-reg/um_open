@@ -15,9 +15,6 @@ func keepLines(s string, n int) string {
 
 func main() {
 
-
-
-
 var i interface{}=212
 
 var url string="http://dev-app-0007:9000"
