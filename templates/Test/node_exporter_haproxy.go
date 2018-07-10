@@ -463,9 +463,6 @@ func filterServerMetrics(filter string) (map[int]*prometheus.GaugeVec, error) {
 }
 
 func main() {
-	//port :=os.Args[1]
-	//fmt.Println(port)
-
 	const pidFileHelpText = `Path to HAProxy pid file.
 	If provided, the standard process metrics get exported for the HAProxy
 	process, prefixed with 'haproxy_process_...'. The haproxy_process exporter
@@ -474,7 +471,7 @@ func main() {
 	https://prometheus.io/docs/instrumenting/writing_clientlibs/#process-metrics.`
 
 	var (
-		listenAddress             = kingpin.Flag("web.listen-address", "Address to listen on for web interface and telemetry.").Default(":9091").String()
+		listenAddress             = kingpin.Flag("web.listen-address", "Address to listen on for web interface and telemetry.").Default(":9101").String()
 		metricsPath               = kingpin.Flag("web.telemetry-path", "Path under which to expose metrics.").Default("/metrics").String()
 		haProxyScrapeURI          = kingpin.Flag("haproxy.scrape-uri", "URI on which to scrape HAProxy.").Default("http://localhost/;csv").String()
 		haProxySSLVerify          = kingpin.Flag("haproxy.ssl-verify", "Flag that enables SSL certificate verification for the scrape URI").Default("true").Bool()
