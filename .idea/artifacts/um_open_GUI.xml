@@ -13,7 +13,6 @@
           <element id="library" level="project" name="jdbc" />
           <element id="library" level="project" name="common" />
           <element id="library" level="project" name="json" />
-          <element id="library" level="project" name="parsers" />
           <element id="library" level="project" name="io" />
           <element id="library" level="project" name="browser" />
         </element>

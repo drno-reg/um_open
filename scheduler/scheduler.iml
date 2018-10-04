@@ -9,7 +9,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="backend" />
     <orderEntry type="library" name="common" level="project" />
-    <orderEntry type="library" name="parsers" level="project" />
     <orderEntry type="library" name="io" level="project" />
     <orderEntry type="library" name="browser" level="project" />
   </component>

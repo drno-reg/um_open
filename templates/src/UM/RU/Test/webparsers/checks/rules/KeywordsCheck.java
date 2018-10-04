@@ -3,9 +3,9 @@
 // * To change this template file, choose Tools | Templates
 // * and open the template in the editor.
 // */
-//package UM.RU.Test.webparsers.checks.rules;
+//package UM.RU.User.webparsers.checks.rules;
 //
-//import UM.RU.Test.webparsers.checks.CheckResult;
+//import UM.RU.User.webparsers.checks.CheckResult;
 //import com.gargoylesoftware.htmlunit.html.HtmlPage;
 //import com.google.gson.Gson;
 //import java.util.ArrayList;
@@ -17,7 +17,7 @@
 // *
 // * @author vassilii
 // */
-//public class KeywordsCheck extends UM.RU.Test.webparsers.checks.CheckRule{
+//public class KeywordsCheck extends UM.RU.User.webparsers.checks.CheckRule{
 //
 //    public KeywordsCheck(String url, String params) {
 //        super(url, params);

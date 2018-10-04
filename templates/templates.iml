@@ -12,7 +12,7 @@
     <orderEntry type="library" name="common" level="project" />
     <orderEntry type="module" module-name="backend" />
     <orderEntry type="library" name="json" level="project" />
-    <orderEntry type="library" name="parsers" level="project" />
     <orderEntry type="library" name="io" level="project" />
+    <orderEntry type="library" name="parsers" level="project" />
   </component>
 </module>

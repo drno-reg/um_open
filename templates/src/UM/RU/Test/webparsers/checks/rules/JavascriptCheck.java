@@ -3,9 +3,9 @@
 // * To change this template file, choose Tools | Templates
 // * and open the template in the editor.
 // */
-//package UM.RU.Test.webparsers.checks.rules;
+//package UM.RU.User.webparsers.checks.rules;
 //
-//import UM.RU.Test.webparsers.checks.CheckResult;
+//import UM.RU.User.webparsers.checks.CheckResult;
 //import com.gargoylesoftware.htmlunit.Page;
 //import com.gargoylesoftware.htmlunit.ScriptException;
 //import com.gargoylesoftware.htmlunit.html.HtmlElement;
@@ -19,7 +19,7 @@
 // *
 // * @author vassilii
 // */
-//public class JavascriptCheck extends UM.RU.Test.webparsers.checks.CheckRule{
+//public class JavascriptCheck extends UM.RU.User.webparsers.checks.CheckRule{
 //
 //    public JavascriptCheck(String url, String params) {
 //        super(url, params);
