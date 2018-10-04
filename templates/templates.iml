@@ -14,5 +14,8 @@
     <orderEntry type="library" name="json" level="project" />
     <orderEntry type="library" name="io" level="project" />
     <orderEntry type="library" name="parsers" level="project" />
+    <orderEntry type="library" name="jsp" level="project" />
+    <orderEntry type="library" name="jdbc" level="project" />
+    <orderEntry type="library" name="prometheus" level="project" />
   </component>
 </module>

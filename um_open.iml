@@ -10,5 +10,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="common" level="project" />
     <orderEntry type="library" name="parsers" level="project" />
+    <orderEntry type="library" name="prometheus" level="project" />
   </component>
 </module>
