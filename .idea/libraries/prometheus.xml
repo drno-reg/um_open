@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="prometheus">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/libs_external/prometheus" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/libs_external/prometheus" />
+    </SOURCES>
+    <jarDirectory url="file://$PROJECT_DIR$/libs_external/prometheus" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/libs_external/prometheus" recursive="false" type="SOURCES" />
+  </library>
+</component>
