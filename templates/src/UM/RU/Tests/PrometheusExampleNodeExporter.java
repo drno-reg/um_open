@@ -30,9 +30,9 @@ import io.vertx.ext.web.Router;
             c.inc(2);
             s.observe(3);
             h.observe(4);
-            l.labels("foo").inc(54);
-            l.labels("port").inc(10010);
-            l.labels("number").inc(12345);
+            l.labels("Random_number").inc(Math.random() * 5);
+
+            vertx.timerStream(100);
         }
 
 

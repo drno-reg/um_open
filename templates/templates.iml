@@ -17,5 +17,7 @@
     <orderEntry type="library" name="jsp" level="project" />
     <orderEntry type="library" name="jdbc" level="project" />
     <orderEntry type="library" name="prometheus" level="project" />
+    <orderEntry type="library" name="spring" level="project" />
+    <orderEntry type="library" name="jetty" level="project" />
   </component>
 </module>

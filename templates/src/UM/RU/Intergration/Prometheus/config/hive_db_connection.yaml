@@ -1,0 +1,43 @@
+# Zabbix Exporter for Prometheus simular Node_Exporter
+prometheus_db_exporter:
+    # спецификация
+    # наименование проекта
+    PROJECT:
+    # JDBC URL
+    URL : jdbc:hive2://rnd-dwh-nn-001:10010
+    # путь к библиотеке
+    LIB_PATH :
+    # наименование Java класса
+    CLASS : org.apache.hive.jdbc.HiveDriver
+    # имя
+    USERNAME : sa0000adverttest
+    # пароль
+    PASSWORD : GzHi0YABk!Ru%'%
+    # список метрик
+    METRICS:
+    - value1_change_cnt
+    - value2_change_cnt
+    # список баз данных
+    DBNAME:
+      - base1
+      - base2
+    # список скриптов
+    SCRIPT:
+      - sql: |
+          with pre as (
+          select *
+          from base1.change_cnt value
+          order by value.date desc
+          limit 1
+          )
+          select cnt
+          from pre
+      - sql: |
+          with pre as (
+          select *
+          from base2.change_cnt value
+          order by value.date desc
+          limit 1
+          )
+          select cnt
+          from pre
