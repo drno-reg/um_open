@@ -8,6 +8,10 @@
         </element>
         <element id="module-output" name="templates" />
       </element>
+      <element id="directory" name="lib">
+        <element id="library" level="project" name="prometheus" />
+        <element id="library" level="project" name="jetty" />
+      </element>
     </root>
   </artifact>
 </component>
