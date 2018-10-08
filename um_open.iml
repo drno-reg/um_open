@@ -13,5 +13,6 @@
     <orderEntry type="library" name="prometheus" level="project" />
     <orderEntry type="library" name="spring" level="project" />
     <orderEntry type="library" name="jetty" level="project" />
+    <orderEntry type="library" name="log" level="project" />
   </component>
 </module>
