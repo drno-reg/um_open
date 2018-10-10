@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact build-on-make="true" name="sqlite">
+    <output-path>$PROJECT_DIR$/out/artifacts/sqlite</output-path>
+    <root id="root">
+      <element id="directory" name="lib">
+        <element id="library" level="project" name="jdbc" />
+      </element>
+      <element id="archive" name="sqlite.jar">
+        <element id="module-output" name="templates" />
+        <element id="directory" name="META-INF">
+          <element id="file-copy" path="$PROJECT_DIR$/templates/Test/META-INF/MANIFEST.MF" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
